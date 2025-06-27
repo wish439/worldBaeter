@@ -1,0 +1,4 @@
+name: worldBaeter
+version: '1.0'
+main: org.wishtoday.wb.worldBaeter.WorldBaeter
+api-version: '1.21'
