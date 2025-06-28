@@ -59,7 +59,7 @@ public class GuiUtils {
     }
     /**
      * 判断是否需要取消GUI事件（基于标题检查）
-     *
+     * <p>
      * 用于事件处理中判断点击的GUI是否属于本插件
      * @param title 要检查的GUI标题
      * @return true - 需要取消事件（非本插件的GUI）
