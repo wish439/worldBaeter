@@ -2,12 +2,11 @@ package org.wishtoday.wb.worldBaeter;
 
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.wb.worldBaeter.Command.MarketCommand;
-import org.wishtoday.wb.worldBaeter.Events.impl.InventoryEvents;
-import org.wishtoday.wb.worldBaeter.Events.impl.PlayerEvents;
 import org.wishtoday.wb.worldBaeter.GUI.NavGUI;
+import org.wishtoday.wb.worldBaeter.GUI.SellItemGUI;
 
 import static org.wishtoday.wb.worldBaeter.Events.RegisterEvent.registerEvent;
 /**

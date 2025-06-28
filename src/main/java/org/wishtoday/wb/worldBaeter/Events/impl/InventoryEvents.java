@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
+import org.wishtoday.wb.worldBaeter.WorldBaeter;
 
 public class InventoryEvents implements Listener {
     @EventHandler
@@ -17,7 +18,7 @@ public class InventoryEvents implements Listener {
         }
         ItemStack item = e.getCurrentItem();
         if (item == null) return;
-        if (item.getType() != Material.GRAY_STAINED_GLASS_PANE) return;
+        if (item.getType() != GuiUtils.DEFAULTERS) return;
         e.setCancelled(true);
     }
 }

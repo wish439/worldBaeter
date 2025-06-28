@@ -99,7 +99,10 @@ public class NavGUI {
                 ,(player
                         , item
                         , clickType
-                        , action) -> player.sendMessage(Component.text("你点击了\"出售\"")));
+                        , action) -> {
+                    player.sendMessage(Component.text("你点击了\"出售\""));
+                    SellItemGUI.openInventoryToPlayer(player);
+                });
         // 浏览市场按钮（槽位11）
         addItemNameAndAction(
                 11,
