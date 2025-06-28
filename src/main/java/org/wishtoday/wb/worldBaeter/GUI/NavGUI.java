@@ -77,7 +77,8 @@ public class NavGUI {
     // 可能需要在服务器开启时调用
     public static void initializeInventoryItem() {
         // 出售物品按钮
-        addItemNameAndAction(11
+        addItemNameAndAction(
+                10
                 , "出售"
                 , Material.DIAMOND
                 ,(player
@@ -88,7 +89,7 @@ public class NavGUI {
                 });
         // 浏览市场按钮
         addItemNameAndAction(
-                12,
+                11,
                 "浏览商品"
                 , Material.IRON_INGOT,
                 (player
@@ -99,14 +100,14 @@ public class NavGUI {
                 });
         // 添加“查看我正在出售的”按钮
         addItemNameAndAction(
-                13,
+                12,
                 "我正在出售的",
                 Material.CHEST,
                 (player, item, clickType, action) -> {
                     player.sendMessage(Component.text("你点击了\"我正在出售的商品\""));
                 });
         addItemNameAndAction(
-                14,
+                13,
                 "取回物品",
                 Material.HOPPER,
                 (player, item, clickType, action) -> {
@@ -114,7 +115,7 @@ public class NavGUI {
                     // 这里你可以根据需要打开其他的页面，如展示商品详情等
                 });
         addItemNameAndAction(
-                15,
+                14,
                 "购买历史",
                 Material.BARRIER,
                 (player, item, clickType, action) -> {
@@ -123,7 +124,7 @@ public class NavGUI {
                 }
         );
         addItemNameAndAction(
-                16,
+                15,
                 "出售历史",
                 Material.BARRIER,
                 (player, item, clickType, action) -> {
@@ -132,9 +133,9 @@ public class NavGUI {
                 }
         );
         addItemNameAndAction(
-                17,
+                16,
                 "邮箱",
-                Material.BARRIER,
+                Material.ENDER_CHEST,
                 (player, item, clickType, action) -> {
                     player.sendMessage(Component.text("你点击了\"取出交易物\""));
                     // 这里你可以根据需要打开其他的页面，如展示商品详情等
