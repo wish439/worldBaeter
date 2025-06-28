@@ -51,6 +51,7 @@ public class MarketGUI {
 
     private static ItemStack addLore(ItemStack item, ItemStack needItem, String name) {
         ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
         if (meta.lore() == null) {
             meta.lore(List.of(Component.text("此物品由" + name + "出售")
                     ,Component.text("他需要提交"
