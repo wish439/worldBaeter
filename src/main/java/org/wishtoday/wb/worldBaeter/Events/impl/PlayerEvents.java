@@ -1,4 +1,4 @@
-package org.wishtoday.wb.worldBaeter.Events;
+package org.wishtoday.wb.worldBaeter.Events.impl;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

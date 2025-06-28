@@ -1,4 +1,4 @@
-package org.wishtoday.wb.worldBaeter.Events;
+package org.wishtoday.wb.worldBaeter.Events.impl;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -6,15 +6,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.wishtoday.wb.worldBaeter.GUI.MarketGUI;
-import org.wishtoday.wb.worldBaeter.GUI.NavGUI;
+import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 
 public class InventoryEvents implements Listener {
     @EventHandler
     public void onClickGlass(InventoryClickEvent e) {
         Component title = e.getView().title();
-        if (!title.equals(NavGUI.getTitle())
-                && !title.equals(MarketGUI.INVENTORY_NAME)) {
+        if (GuiUtils.isNeedCancelGUI(title)) {
             return;
         }
         ItemStack item = e.getCurrentItem();

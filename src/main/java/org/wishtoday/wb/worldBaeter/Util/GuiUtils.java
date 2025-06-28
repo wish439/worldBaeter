@@ -6,10 +6,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
+import org.wishtoday.wb.worldBaeter.GUI.MarketGUI;
+import org.wishtoday.wb.worldBaeter.GUI.NavGUI;
 
 public class GuiUtils {
     public static final int SMALLCHESTSIZE = 27;
     public static final int BIGCHESTSIZE = SMALLCHESTSIZE * 2;
+
     public static Inventory createInventoryWithGlass(int size, Component title) {
         Inventory inventory = Bukkit.createInventory(null, size, title);
         return setGlass(inventory);
@@ -32,5 +35,10 @@ public class GuiUtils {
     @Nullable
     public static Inventory setGlass(Inventory inventory) {
         return setGlass(inventory, null);
+    }
+
+    public static boolean isNeedCancelGUI(Component title) {
+        return !title.equals(NavGUI.getTitle())
+                && !title.equals(MarketGUI.INVENTORY_NAME);
     }
 }
