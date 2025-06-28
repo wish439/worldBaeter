@@ -40,11 +40,11 @@ public class NavGUI {
     //可能需要在服务器开启时调用
     public static void initializeInventoryItem() {
         addItems.put(11, ItemUtil.setName("出售", Material.DIAMOND));
+        addItems.put(12, ItemUtil.setName("浏览商品", Material.IRON_INGOT));
     }
     public static void setInventoryItemFromMap() {
         for (Map.Entry<Integer, ItemStack> entry : addItems.entrySet()) {
             inventory.setItem(entry.getKey(), entry.getValue());
         }
     }
-
 }
