@@ -137,11 +137,37 @@ public class NavGUI {
                     player.sendMessage(Component.text("你点击了\"取出交易物\""));
                 }
         );
+        addItemNameAndAction(
+                21,
+                "点击跳转到指定页",
+                Material.PAPER,
+                (player, item, clickType, action) -> {
+                    player.sendMessage(Component.text("你点击了\"转到指定页\""));
+                }
+        );
+        addItemNameAndAction(
+                22,
+                "退出",
+                Material.OAK_DOOR,
+                (player, item, clickType, action) -> {
+                    player.sendMessage(Component.text("你点击了\"退出\""));
+                    player.closeInventory();
+                }
+        );
+        addItemNameAndAction(
+                23,
+                "玩家出售列表",
+                Material.PLAYER_HEAD,
+                (player, item, clickType, action) -> {
+                    player.sendMessage(Component.text("你点击了\"玩家出售列表\""));
+                }
+        );
     }
 
     public static void setInventoryItemFromMap() {
         for (Map.Entry<Integer, ItemStack> entry : addItems.entrySet()) {
             inventory.setItem(entry.getKey(), entry.getValue());
         }
+
     }
 }
