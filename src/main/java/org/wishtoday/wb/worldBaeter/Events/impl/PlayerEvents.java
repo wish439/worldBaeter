@@ -16,6 +16,5 @@ public class PlayerEvents implements Listener {
         Player player = event.getPlayer();
         if (MarketGUI.items.containsKey(new PlayerData(player))) return;
         MarketGUI.items.put(new PlayerData(player),new ArrayList<>());
-        SellItemGUI.createInventoryToPlayer(player);
     }
 }

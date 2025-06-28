@@ -54,7 +54,7 @@ public class MarketCommand {
     private static int openGUI(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (!(sender instanceof Player player)) return 0;
-        NavGUI.open(player);
+        new NavGUI().open(player);
         return 1;
     }
 }

@@ -25,8 +25,6 @@ public final class WorldBaeter extends JavaPlugin {
         // ========== 插件启动逻辑 ========== //
         // 1. 注册所有事件监听器
         registerEvent(this.getServer().getPluginManager(),this);
-        // 2. 初始化主导航菜单的GUI物品
-        NavGUI.initializeInventoryItem();
         // 3. 注册插件命令
         registerCommands();
     }
