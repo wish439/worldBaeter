@@ -1,9 +1,11 @@
 package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
+import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 
 public class NavGUI {
     private static final int GUI_SIZE = 27;
@@ -16,6 +18,7 @@ public class NavGUI {
 
     public static void open(Player player) {
         player.closeInventory();
+        setInventoryItem();
         player.openInventory(inventory);
     }
 
@@ -24,5 +27,8 @@ public class NavGUI {
     }
     public static Inventory getInventory() {
         return inventory;
+    }
+    public static void setInventoryItem() {
+        inventory.setItem(11, ItemUtil.setName("出售",Material.DIAMOND));
     }
 }
