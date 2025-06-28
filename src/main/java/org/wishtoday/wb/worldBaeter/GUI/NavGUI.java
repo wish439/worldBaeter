@@ -15,6 +15,7 @@ import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 import java.util.HashMap;
 import java.util.Map;
 
+// 创建主导航菜单，玩家点击按钮后会跳转到不同功能页面
 public class NavGUI {
     private static Map<Component, ClickAction> listeners = new HashMap<>();
     private static Map<Integer, ItemStack> addItems = new HashMap<>();
@@ -73,8 +74,9 @@ public class NavGUI {
         getAction(component).click(player,item,type,inventoryAction);
     }
 
-    //可能需要在服务器开启时调用
+    // 可能需要在服务器开启时调用
     public static void initializeInventoryItem() {
+        // 出售物品按钮
         addItemNameAndAction(11
                 , "出售"
                 , Material.DIAMOND
@@ -84,6 +86,7 @@ public class NavGUI {
                         , action) -> {
             player.sendMessage(Component.text("你点击了\"出售\""));
                 });
+        // 浏览市场按钮
         addItemNameAndAction(
                 12,
                 "浏览商品"
@@ -93,6 +96,48 @@ public class NavGUI {
                         , clickType
                         , action) -> {
                     player.sendMessage(Component.text("你点击了\"浏览商品\""));
+                });
+        // 添加“查看我正在出售的”按钮
+        addItemNameAndAction(
+                13,
+                "我正在出售的",
+                Material.CHEST,
+                (player, item, clickType, action) -> {
+                    player.sendMessage(Component.text("你点击了\"我正在出售的商品\""));
+                });
+        addItemNameAndAction(
+                14,
+                "取回物品",
+                Material.HOPPER,
+                (player, item, clickType, action) -> {
+                    player.sendMessage(Component.text("你点击了\"取回物品\""));
+                    // 这里你可以根据需要打开其他的页面，如展示商品详情等
+                });
+        addItemNameAndAction(
+                15,
+                "购买历史",
+                Material.BARRIER,
+                (player, item, clickType, action) -> {
+                    player.sendMessage(Component.text("你点击了\"购买历史\""));
+                    // 这里你可以根据需要打开其他的页面，如展示商品详情等
+                }
+        );
+        addItemNameAndAction(
+                16,
+                "出售历史",
+                Material.BARRIER,
+                (player, item, clickType, action) -> {
+                    player.sendMessage(Component.text("你点击了\"出售历史\""));
+                    // 这里你可以根据需要打开其他的页面，如展示商品详情等
+                }
+        );
+        addItemNameAndAction(
+                17,
+                "邮箱",
+                Material.BARRIER,
+                (player, item, clickType, action) -> {
+                    player.sendMessage(Component.text("你点击了\"取出交易物\""));
+                    // 这里你可以根据需要打开其他的页面，如展示商品详情等
                 }
         );
     }
