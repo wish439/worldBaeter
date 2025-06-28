@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public class GuiUtils {
+    public static final int SMALLCHESTSIZE = 27;
+    public static final int BIGCHESTSIZE = SMALLCHESTSIZE * 2;
     public static Inventory createInventoryWithGlass(int size, Component title) {
         Inventory inventory = Bukkit.createInventory(null, size, title);
         return setGlass(inventory);

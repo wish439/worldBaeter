@@ -8,12 +8,11 @@ import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 
 public class NavGUI {
-    private static final int GUI_SIZE = 27;
     private static final Component GUI_TITLE = Component.text("World Baeter");
-    private static Inventory inventory = GuiUtils.createInventoryWithGlass(GUI_SIZE, GUI_TITLE);
+    private static Inventory inventory = GuiUtils.createInventoryWithGlass(GuiUtils.SMALLCHESTSIZE, GUI_TITLE);
 
-    public static int getGuiSize() {
-        return GUI_SIZE;
+    public static int getInventorySize() {
+        return inventory.getSize();
     }
 
     public static void open(Player player) {
@@ -25,10 +24,12 @@ public class NavGUI {
     public static Component getTitle() {
         return GUI_TITLE;
     }
+
     public static Inventory getInventory() {
         return inventory;
     }
+
     public static void setInventoryItem() {
-        inventory.setItem(11, ItemUtil.setName("出售",Material.DIAMOND));
+        inventory.setItem(11, ItemUtil.setName("出售", Material.DIAMOND));
     }
 }
