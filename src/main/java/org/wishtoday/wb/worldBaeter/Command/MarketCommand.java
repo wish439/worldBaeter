@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.worldBaeter.GUI.MarketGUI;
+import org.wishtoday.wb.worldBaeter.GUI.NavGUI;
 
 public class MarketCommand {
     public static void registerCommand(Commands commands) {
@@ -53,7 +54,7 @@ public class MarketCommand {
     private static int openGUI(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (!(sender instanceof Player player)) return 0;
-        MarketGUI.openInventory(player);
+        NavGUI.open(player);
         return 1;
     }
 }
