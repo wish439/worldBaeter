@@ -7,10 +7,10 @@ import org.wishtoday.wb.worldBaeter.Command.MarketCommand;
 import org.wishtoday.wb.worldBaeter.Events.PlayerEvents;
 
 public final class WorldBaeter extends JavaPlugin {
-    /*private static WorldBaeter plugin;
+    private static WorldBaeter plugin;
     public WorldBaeter() {
         plugin = this;
-    }*/
+    }
 
     @Override
     public void onEnable() {
@@ -30,5 +30,8 @@ public final class WorldBaeter extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+    public static WorldBaeter getInstance() {
+        return plugin;
     }
 }
