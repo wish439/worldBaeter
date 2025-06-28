@@ -31,13 +31,13 @@ public class MarketCommand {
         if (!(sender instanceof Player player)) return 0;
         Integer count = context.getArgument("item_count", Integer.class);
         String name = context.getArgument("item_name", String.class);
-        System.out.println(name);
         Material material = findMaterial(name);
-        System.out.println(material);
         if (material == null) return 0;
-        ItemStack stack = new ItemStack(material,1);
-        System.out.println(stack.getItemMeta().getDisplayName() + "111");
         ItemStack mainHand = player.getInventory().getItemInMainHand();
+        if (mainHand.getType() == Material.AIR) {
+            player.sendMessage("你的手中没有物品");
+            return 0;
+        }
         player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
         ItemStack item = new ItemStack(material, count);
         MarketGUI.addToItems(player, mainHand, item);
