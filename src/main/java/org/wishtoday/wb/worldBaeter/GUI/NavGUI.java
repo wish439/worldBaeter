@@ -84,9 +84,7 @@ public class NavGUI {
                 ,(player
                         , item
                         , clickType
-                        , action) -> {
-            player.sendMessage(Component.text("你点击了\"出售\""));
-                });
+                        , action) -> player.sendMessage(Component.text("你点击了\"出售\"")));
         // 浏览市场按钮
         addItemNameAndAction(
                 11,
@@ -112,7 +110,6 @@ public class NavGUI {
                 Material.HOPPER,
                 (player, item, clickType, action) -> {
                     player.sendMessage(Component.text("你点击了\"取回物品\""));
-                    // 这里你可以根据需要打开其他的页面，如展示商品详情等
                 });
         addItemNameAndAction(
                 14,
@@ -120,7 +117,7 @@ public class NavGUI {
                 Material.BARRIER,
                 (player, item, clickType, action) -> {
                     player.sendMessage(Component.text("你点击了\"购买历史\""));
-                    // 这里你可以根据需要打开其他的页面，如展示商品详情等
+                    player.closeInventory();
                 }
         );
         addItemNameAndAction(
@@ -129,7 +126,7 @@ public class NavGUI {
                 Material.BARRIER,
                 (player, item, clickType, action) -> {
                     player.sendMessage(Component.text("你点击了\"出售历史\""));
-                    // 这里你可以根据需要打开其他的页面，如展示商品详情等
+                    player.closeInventory();
                 }
         );
         addItemNameAndAction(
@@ -138,7 +135,6 @@ public class NavGUI {
                 Material.ENDER_CHEST,
                 (player, item, clickType, action) -> {
                     player.sendMessage(Component.text("你点击了\"取出交易物\""));
-                    // 这里你可以根据需要打开其他的页面，如展示商品详情等
                 }
         );
     }
