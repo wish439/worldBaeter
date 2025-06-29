@@ -86,6 +86,16 @@ public abstract class BaseGUI implements GUIInterface {
         listeners.put(text, action);
         populateItems();
     }
+    public void addItemNameAndActionAutoRefresh(
+            String name
+            , Material material
+            , ClickAction action) {
+        TextComponent text = Component.text(name);// 创建文本组件
+        inventory.addItem(ItemUtil.setName(text, material));
+        // 关联文本组件和点击动作（用于后续事件触发）
+        listeners.put(text, action);
+    }
+
 
     // 填充物品到库存
     private void populateItems() {

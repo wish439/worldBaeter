@@ -50,6 +50,7 @@ public class NavGUI extends BaseGUI {
                         , clickType
                         , action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"浏览商品\""));
+                    MarketGUI.getInstance().open(player);
                 });
         // 查看当前出售物品按钮（槽位12）
         addItemNameAndAction(

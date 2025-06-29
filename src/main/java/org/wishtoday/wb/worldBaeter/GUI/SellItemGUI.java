@@ -118,6 +118,6 @@ public class SellItemGUI extends BaseGUI {
 
     @Override
     public void onClose(InventoryCloseEvent event) {
-        event.getPlayer().sendMessage("你关闭了SellItemGUI");
+
     }
 }
