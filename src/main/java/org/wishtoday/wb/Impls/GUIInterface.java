@@ -9,13 +9,15 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 
 public interface GUIInterface {
     void open(Player player);
     Component getTitle();
     Inventory getInventory();
-    boolean isGUIItem(Component component);
-    void runAction(Component name, Player player, ItemStack item,
+    boolean isGUIItem(UUID component);
+    void runAction(UUID uuid, Player player, ItemStack item,
                    ClickType clickType, InventoryAction inventoryAction
                     , int slot, InventoryClickEvent event);
     void onClose(InventoryCloseEvent event);

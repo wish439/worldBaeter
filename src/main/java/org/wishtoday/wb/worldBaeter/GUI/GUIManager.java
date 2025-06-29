@@ -7,9 +7,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.Impls.GUIInterface;
+import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class GUIManager {
     private static final Map<Component, GUIInterface> guiMap = new HashMap<>();
@@ -36,12 +38,13 @@ public class GUIManager {
         if (gui == null) return;
         ItemStack item = event.getCurrentItem();
         if (item == null) return;
-        if (!gui.isGUIItem(item.getItemMeta().displayName())) return;
+        if (!gui.isGUIItem(ItemUtil.getUUIDFromItem(item))) return;
         event.setCancelled(true);
         Component component = item.getItemMeta().displayName();
+        UUID uuid = ItemUtil.getUUIDFromItem(item);
         HumanEntity humanEntity = event.getWhoClicked();
         if (!(humanEntity instanceof Player player)) return;
-        gui.runAction(component
+        gui.runAction(uuid
                 , player
                 , item
                 , event.getClick()

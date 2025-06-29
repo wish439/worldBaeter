@@ -16,9 +16,10 @@ import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public abstract class BaseGUI implements GUIInterface {
-    protected final Map<Component, ClickAction> listeners = new HashMap<>();
+    protected final Map<UUID, ClickAction> listeners = new HashMap<>();
     protected final Map<Integer, ItemStack> addItems = new HashMap<>();
     protected Inventory inventory;
     protected final Component title;
@@ -32,13 +33,17 @@ public abstract class BaseGUI implements GUIInterface {
         populateItems();
         GUIManager.addGUI(this);
     }
-    public Map<Component, ClickAction> getListeners() {
+
+    public Map<UUID, ClickAction> getListeners() {
         return listeners;
     }
+
     public Map<Integer, ItemStack> getAddItems() {
         return addItems;
     }
+
     public abstract Inventory createInitialInventory(int size, Component title);
+
     @Override
     public void open(Player player) {
         player.closeInventory();
@@ -47,53 +52,59 @@ public abstract class BaseGUI implements GUIInterface {
     }
 
     @Override
-    public boolean isGUIItem(Component component) {
-        return listeners.containsKey(component);
+    public boolean isGUIItem(UUID uuid) {
+        return listeners.containsKey(uuid);
     }
 
     protected abstract void initializeItems();
+
     public void addItem(int slot, String name, Material material, ClickAction action) {
         TextComponent text = Component.text(name);
-        addItems.put(slot, ItemUtil.setName(text, material));
-        listeners.put(text, action);
+        UUID uuid = UUID.randomUUID();
+        addItems.put(slot, ItemUtil.setName(text, material, uuid));
+        listeners.put(uuid, action);
     }
 
     public void addItemNameAndAction(int slot, ItemStack item, ClickAction action) {
-        Component displayName = item.getItemMeta().displayName();
-        if (displayName != null) {
-            addItems.put(slot, item);
-            listeners.put(displayName, action);
-        }
+        UUID uuid = ItemUtil.addUUIDToItem(item);
+        addItems.put(slot, item);
+        listeners.put(uuid, action);
     }
+
     public void addItemNameAndAction(int slot
             , String name
             , Material material
             , ClickAction action) {
         TextComponent text = Component.text(name);// 创建文本组件
+        UUID uuid = UUID.randomUUID();
         // 通过工具类创建带名称的物品，并存入映射
-        addItems.put(slot, ItemUtil.setName(text, material));
+        addItems.put(slot, ItemUtil.setName(text, material,uuid));
         // 关联文本组件和点击动作（用于后续事件触发）
-        listeners.put(text, action);
+        listeners.put(uuid, action);
     }
+
     public void addItemNameAndActionAutoRefresh(
             int slot
             , String name
             , Material material
             , ClickAction action) {
         TextComponent text = Component.text(name);// 创建文本组件
-        addItems.put(slot, ItemUtil.setName(text, material));
+        UUID uuid = UUID.randomUUID();
+        addItems.put(slot, ItemUtil.setName(text, material,uuid));
         // 关联文本组件和点击动作（用于后续事件触发）
-        listeners.put(text, action);
+        listeners.put(uuid, action);
         populateItems();
     }
+
     public void addItemNameAndActionAutoRefresh(
             String name
             , Material material
             , ClickAction action) {
         TextComponent text = Component.text(name);// 创建文本组件
-        inventory.addItem(ItemUtil.setName(text, material));
+        UUID uuid = UUID.randomUUID();
+        inventory.addItem(ItemUtil.setName(text, material,uuid));
         // 关联文本组件和点击动作（用于后续事件触发）
-        listeners.put(text, action);
+        listeners.put(uuid, action);
     }
 
 
@@ -105,15 +116,15 @@ public abstract class BaseGUI implements GUIInterface {
     }
 
     @Override
-    public void runAction(Component name
+    public void runAction(UUID uuid
             , Player player
             , ItemStack item
             , ClickType clickType
             , InventoryAction inventoryAction
             , int slot
             , InventoryClickEvent event) {
-        if (listeners.get(name) == null) return;
-        listeners.get(name).click(player, item, clickType, inventoryAction,slot,event);
+        if (listeners.get(uuid) == null) return;
+        listeners.get(uuid).click(player, item, clickType, inventoryAction, slot, event);
     }
 
     @Override

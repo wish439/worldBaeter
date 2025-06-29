@@ -46,6 +46,7 @@ public class MarketGUI extends BaseGUI {
                     Material.IRON_INGOT,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage("你点击了回退");
+                        new NavGUI().open(player);
                     }
             );
         }
