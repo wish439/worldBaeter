@@ -63,7 +63,7 @@ public class SellItemGUI extends BaseGUI {
                     i,
                     "确认交易",
                     Material.GREEN_STAINED_GLASS_PANE,
-                    (player, item, clickType, action, slot) -> {
+                    (player, item, clickType, action, slot, event) -> {
                         player.sendMessage(Component.text("你点击了\"确认交易\""));
                     }
             );
@@ -75,7 +75,7 @@ public class SellItemGUI extends BaseGUI {
                     i,
                     "回退界面",
                     Material.RED_STAINED_GLASS_PANE,
-                    (player, item, clickType, action, slot) -> {
+                    (player, item, clickType, action, slot, event) -> {
                         player.sendMessage(Component.text("你点击了\"回退界面\""));
                         new NavGUI().open(player);
                     }
@@ -97,19 +97,16 @@ public class SellItemGUI extends BaseGUI {
                             , item
                             , clickType
                             , action
-                            , slot) -> {
-                        switchItemEffect(player, slot, item, clickType, action);
+                            , slot, event) -> {
+                        switchItemEffect(player, slot);
                     }
             );
         }
     }
 
-    private void switchItemEffect(
+    public void switchItemEffect(
             Player player
-            , int slot
-            , ItemStack stack
-            , ClickType clickType
-            , InventoryAction action) {
+            , int slot) {
         player.getPersistentDataContainer().set(PLAYER_CLICK_SLOT, PersistentDataType.INTEGER, slot);
         player.getPersistentDataContainer().set(IS_CLICKED, PersistentDataType.BOOLEAN, true);
         GUI_MAP.put(player.getUniqueId(), this);

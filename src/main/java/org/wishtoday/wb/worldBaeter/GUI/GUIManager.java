@@ -33,9 +33,10 @@ public class GUIManager {
         Component title = event.getView().title();
         GUIInterface gui = getGUI(title);
         if (gui == null) return;
-        event.setCancelled(true);
         ItemStack item = event.getCurrentItem();
         if (item == null) return;
+        if (!gui.isGUIItem(item.getItemMeta().displayName())) return;
+        event.setCancelled(true);
         Component component = item.getItemMeta().displayName();
         HumanEntity humanEntity = event.getWhoClicked();
         if (!(humanEntity instanceof Player player)) return;
@@ -44,6 +45,7 @@ public class GUIManager {
                 , item
                 , event.getClick()
                 , event.getAction()
-                , event.getSlot());
+                , event.getSlot()
+                , event);
     }
 }

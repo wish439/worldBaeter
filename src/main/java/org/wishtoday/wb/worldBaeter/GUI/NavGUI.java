@@ -33,7 +33,8 @@ public class NavGUI extends BaseGUI {
                         , item
                         , clickType
                         , action
-                        , slot) -> {
+                        , slot
+                        , event) -> {
                     player.sendMessage(Component.text("你点击了\"出售\""));
                     SellItemGUI gui = new SellItemGUI();
                     gui.initializeItems();
@@ -47,7 +48,7 @@ public class NavGUI extends BaseGUI {
                 (player
                         , item
                         , clickType
-                        , action, slot) -> {
+                        , action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"浏览商品\""));
                 });
         // 查看当前出售物品按钮（槽位12）
@@ -55,7 +56,7 @@ public class NavGUI extends BaseGUI {
                 12,
                 "我正在出售的",
                 Material.CHEST,
-                (player, item, clickType, action, slot) -> {
+                (player, item, clickType, action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"我正在出售的商品\""));
                 });
         // 取回物品按钮（槽位13）
@@ -63,7 +64,7 @@ public class NavGUI extends BaseGUI {
                 13,
                 "取回物品",
                 Material.HOPPER,
-                (player, item, clickType, action, slot) -> {
+                (player, item, clickType, action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"取回物品\""));
                 });
         // 购买历史按钮（槽位14，点击后关闭GUI）
@@ -71,7 +72,7 @@ public class NavGUI extends BaseGUI {
                 14,
                 "购买历史",
                 Material.BARRIER,
-                (player, item, clickType, action, slot) -> {
+                (player, item, clickType, action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"购买历史\""));
                     player.closeInventory();
                 }
@@ -81,7 +82,7 @@ public class NavGUI extends BaseGUI {
                 15,
                 "出售历史",
                 Material.BARRIER,
-                (player, item, clickType, action, slot) -> {
+                (player, item, clickType, action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"出售历史\""));
                     player.closeInventory();
                 }
@@ -91,7 +92,7 @@ public class NavGUI extends BaseGUI {
                 16,
                 "邮箱",
                 Material.ENDER_CHEST,
-                (player, item, clickType, action, slot) -> {
+                (player, item, clickType, action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"取出交易物\""));
                 }
         );
@@ -100,7 +101,7 @@ public class NavGUI extends BaseGUI {
                 21,
                 "点击跳转到指定页",
                 Material.PAPER,
-                (player, item, clickType, action, slot) -> {
+                (player, item, clickType, action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"转到指定页\""));
                 }
         );
@@ -109,7 +110,7 @@ public class NavGUI extends BaseGUI {
                 22,
                 "退出",
                 Material.OAK_DOOR,
-                (player, item, clickType, action, slot) -> {
+                (player, item, clickType, action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"退出\""));
                     player.closeInventory();
                 }
@@ -119,7 +120,7 @@ public class NavGUI extends BaseGUI {
                 23,
                 "玩家出售列表",
                 Material.PLAYER_HEAD,
-                (player, item, clickType, action, slot) -> {
+                (player, item, clickType, action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"玩家出售列表\""));
                 }
         );

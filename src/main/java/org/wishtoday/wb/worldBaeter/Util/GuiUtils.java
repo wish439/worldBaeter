@@ -1,19 +1,15 @@
 package org.wishtoday.wb.worldBaeter.Util;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.wishtoday.wb.Impls.ClickAction;
-import org.wishtoday.wb.worldBaeter.GUI.MarketGUI;
-import org.wishtoday.wb.worldBaeter.GUI.NavGUI;
-import org.wishtoday.wb.worldBaeter.GUI.SellItemGUI;
 
 import java.util.Map;
 
@@ -48,7 +44,7 @@ public class GuiUtils {
      * @param sizes 需要填充玻璃的槽位
      * @return 创建并设置好玻璃背景的Inventory对象
      */
-    public static Inventory createInventoryWithGlass(Component title,int size, int... sizes) {
+    public static Inventory createInventoryWithGlass(Component title, int size, int... sizes) {
         Inventory inventory = Bukkit.createInventory(null, size, title);
         return customSetGlass(inventory, sizes);
     }
@@ -94,6 +90,7 @@ public class GuiUtils {
     public static Inventory setGlass(Inventory inventory) {
         return setGlass(inventory, null);
     }
+
     public static void removePlayerTag(Player player, NamespacedKey namespacedKey) {
         player.getPersistentDataContainer().remove(namespacedKey);
     }

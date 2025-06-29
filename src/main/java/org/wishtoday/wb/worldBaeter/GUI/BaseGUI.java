@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.Impls.ClickAction;
@@ -30,6 +31,12 @@ public abstract class BaseGUI implements GUIInterface {
         populateItems();
         GUIManager.addGUI(this);
     }
+    public Map<Component, ClickAction> getListeners() {
+        return listeners;
+    }
+    public Map<Integer, ItemStack> getAddItems() {
+        return addItems;
+    }
     public abstract Inventory createInitialInventory(int size, Component title);
     @Override
     public void open(Player player) {
@@ -44,20 +51,20 @@ public abstract class BaseGUI implements GUIInterface {
     }
 
     protected abstract void initializeItems();
-    protected void addItem(int slot, String name, Material material, ClickAction action) {
+    public void addItem(int slot, String name, Material material, ClickAction action) {
         TextComponent text = Component.text(name);
         addItems.put(slot, ItemUtil.setName(text, material));
         listeners.put(text, action);
     }
 
-    protected void addItemNameAndAction(int slot, ItemStack item, ClickAction action) {
+    public void addItemNameAndAction(int slot, ItemStack item, ClickAction action) {
         Component displayName = item.getItemMeta().displayName();
         if (displayName != null) {
             addItems.put(slot, item);
             listeners.put(displayName, action);
         }
     }
-    protected void addItemNameAndAction(int slot
+    public void addItemNameAndAction(int slot
             , String name
             , Material material
             , ClickAction action) {
@@ -66,6 +73,17 @@ public abstract class BaseGUI implements GUIInterface {
         addItems.put(slot, ItemUtil.setName(text, material));
         // 关联文本组件和点击动作（用于后续事件触发）
         listeners.put(text, action);
+    }
+    public void addItemNameAndActionAutoRefresh(
+            int slot
+            , String name
+            , Material material
+            , ClickAction action) {
+        TextComponent text = Component.text(name);// 创建文本组件
+        addItems.put(slot, ItemUtil.setName(text, material));
+        // 关联文本组件和点击动作（用于后续事件触发）
+        listeners.put(text, action);
+        populateItems();
     }
 
     // 填充物品到库存
@@ -81,9 +99,10 @@ public abstract class BaseGUI implements GUIInterface {
             , ItemStack item
             , ClickType clickType
             , InventoryAction inventoryAction
-            , int slot) {
+            , int slot
+            , InventoryClickEvent event) {
         if (listeners.get(name) == null) return;
-        listeners.get(name).click(player, item, clickType, inventoryAction,slot);
+        listeners.get(name).click(player, item, clickType, inventoryAction,slot,event);
     }
 
     @Override
