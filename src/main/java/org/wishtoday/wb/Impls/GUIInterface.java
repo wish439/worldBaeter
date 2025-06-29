@@ -14,6 +14,7 @@ import java.util.UUID;
 
 public interface GUIInterface {
     void open(Player player);
+    void open(Player player, int index);
     Component getTitle();
     Inventory getInventory();
     boolean isGUIItem(UUID component);

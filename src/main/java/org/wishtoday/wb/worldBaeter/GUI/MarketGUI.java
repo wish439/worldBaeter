@@ -4,7 +4,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 
 import java.util.ArrayList;
@@ -20,6 +22,22 @@ public class MarketGUI extends BaseGUI {
         super(title, GuiUtils.BIGCHESTSIZE);
         invs = new ArrayList<>();
         invs.add(inventory);
+    }
+
+    @Override
+    public void open(Player player,int index) {
+        player.closeInventory();
+        Inventory first = invs.get(index);
+        player.openInventory(first);
+    }
+
+    public void addItemAndAutoExpansion(ItemStack item) {
+        Inventory last = invs.getLast();
+        if (GuiUtils.isFull(last,last.getSize())) {
+            initializeItems();
+            invs.add(inventory);
+        }
+        invs.getLast().addItem(item);
     }
 
     @Override

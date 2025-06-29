@@ -34,6 +34,11 @@ public abstract class BaseGUI implements GUIInterface {
         GUIManager.addGUI(this);
     }
 
+    @Override
+    public void open(Player player, int index) {
+        open(player);
+    }
+
     public Map<UUID, ClickAction> getListeners() {
         return listeners;
     }

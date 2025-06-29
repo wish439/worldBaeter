@@ -94,5 +94,9 @@ public class GuiUtils {
     public static void removePlayerTag(Player player, NamespacedKey namespacedKey) {
         player.getPersistentDataContainer().remove(namespacedKey);
     }
+    public static boolean isFull(Inventory inventory, int slot) {
+        @Nullable ItemStack[] contents = inventory.getContents();
+        return contents.length == slot;
+    }
 
 }

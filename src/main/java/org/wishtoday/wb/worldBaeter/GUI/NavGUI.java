@@ -1,8 +1,8 @@
 package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 
@@ -50,7 +50,7 @@ public class NavGUI extends BaseGUI {
                         , clickType
                         , action, slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"浏览商品\""));
-                    MarketGUI.getInstance().open(player);
+                    MarketGUI.getInstance().open(player,0);
                 });
         // 查看当前出售物品按钮（槽位12）
         addItemNameAndAction(
