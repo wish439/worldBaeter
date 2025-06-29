@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.wb.worldBaeter.Command.MarketCommand;
 import org.wishtoday.wb.worldBaeter.GUI.NavGUI;
 import org.wishtoday.wb.worldBaeter.GUI.SellItemGUI;
+import org.wishtoday.wb.worldBaeter.Util.ConfigUtils;
 
 import static org.wishtoday.wb.worldBaeter.Events.RegisterEvent.registerEvent;
 /**
@@ -23,6 +24,9 @@ public final class WorldBaeter extends JavaPlugin {
     @Override
     public void onEnable() {
         // ========== 插件启动逻辑 ========== //
+        plugin = this;
+        this.saveDefaultConfig();
+        ConfigUtils.initializeMap();
         // 1. 注册所有事件监听器
         registerEvent(this.getServer().getPluginManager(),this);
         // 3. 注册插件命令

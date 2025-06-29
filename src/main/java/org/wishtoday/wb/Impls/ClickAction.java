@@ -10,5 +10,7 @@ public interface ClickAction {
     void click(Player player
             , ItemStack item
             , ClickType clickType
-            , InventoryAction action);
+            , InventoryAction action
+            , int slot
+    );
 }

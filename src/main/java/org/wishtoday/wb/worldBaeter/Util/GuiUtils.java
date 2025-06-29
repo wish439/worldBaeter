@@ -3,6 +3,7 @@ package org.wishtoday.wb.worldBaeter.Util;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
@@ -92,6 +93,9 @@ public class GuiUtils {
     @Nullable
     public static Inventory setGlass(Inventory inventory) {
         return setGlass(inventory, null);
+    }
+    public static void removePlayerTag(Player player, NamespacedKey namespacedKey) {
+        player.getPersistentDataContainer().remove(namespacedKey);
     }
 
 }

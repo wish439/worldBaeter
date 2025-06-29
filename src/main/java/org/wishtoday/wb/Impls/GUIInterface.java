@@ -14,5 +14,6 @@ public interface GUIInterface {
     Inventory getInventory();
     boolean isGUIItem(Component component);
     void runAction(Component name, Player player, ItemStack item,
-                   ClickType clickType, InventoryAction inventoryAction);
+                   ClickType clickType, InventoryAction inventoryAction
+                    , int slot);
 }

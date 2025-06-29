@@ -20,6 +20,7 @@ public class GUIManager {
     public static GUIInterface getGUI(Component component) {
         return guiMap.get(component);
     }
+
     public static boolean hasGUI(Component component) {
         return guiMap.containsKey(component);
     }
@@ -38,6 +39,11 @@ public class GUIManager {
         Component component = item.getItemMeta().displayName();
         HumanEntity humanEntity = event.getWhoClicked();
         if (!(humanEntity instanceof Player player)) return;
-        gui.runAction(component, player, item, event.getClick(), event.getAction());
+        gui.runAction(component
+                , player
+                , item
+                , event.getClick()
+                , event.getAction()
+                , event.getSlot());
     }
 }

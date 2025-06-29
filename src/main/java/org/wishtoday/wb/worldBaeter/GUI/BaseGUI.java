@@ -10,7 +10,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.Impls.ClickAction;
 import org.wishtoday.wb.Impls.GUIInterface;
-import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 
 import java.util.HashMap;
@@ -29,8 +28,6 @@ public abstract class BaseGUI implements GUIInterface {
         this.inventory = createInitialInventory(size, title);
         initializeItems();
         populateItems();
-
-        // 自动注册
         GUIManager.addGUI(this);
     }
     public abstract Inventory createInitialInventory(int size, Component title);
@@ -46,10 +43,7 @@ public abstract class BaseGUI implements GUIInterface {
         return listeners.containsKey(component);
     }
 
-    // 子类实现：初始化GUI项
     protected abstract void initializeItems();
-
-    // 添加GUI项
     protected void addItem(int slot, String name, Material material, ClickAction action) {
         TextComponent text = Component.text(name);
         addItems.put(slot, ItemUtil.setName(text, material));
@@ -86,9 +80,10 @@ public abstract class BaseGUI implements GUIInterface {
             , Player player
             , ItemStack item
             , ClickType clickType
-            , InventoryAction inventoryAction) {
+            , InventoryAction inventoryAction
+            , int slot) {
         if (listeners.get(name) == null) return;
-        listeners.get(name).click(player, item, clickType, inventoryAction);
+        listeners.get(name).click(player, item, clickType, inventoryAction,slot);
     }
 
     @Override
