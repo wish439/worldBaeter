@@ -6,10 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
@@ -36,6 +34,10 @@ public class SellItemGUI extends BaseGUI {
         Bukkit.getServer().getScheduler().runTask(
                 WorldBaeter.getInstance(), () -> {
                     player.closeInventory();
+                    if (GUI_MAP.containsKey(player.getUniqueId())) {
+                        player.openInventory(GUI_MAP.get(player.getUniqueId()).inventory);
+                        return;
+                    }
                     player.openInventory(inventory);
                 }
         );
@@ -112,5 +114,10 @@ public class SellItemGUI extends BaseGUI {
         GUI_MAP.put(player.getUniqueId(), this);
         player.closeInventory();
         player.sendMessage(Component.text("请在输入框输入你想要的物品名称(中英文皆可)"));
+    }
+
+    @Override
+    public void onClose(InventoryCloseEvent event) {
+        event.getPlayer().sendMessage("你关闭了SellItemGUI");
     }
 }

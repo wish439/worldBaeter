@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.Impls.ClickAction;
@@ -113,5 +114,10 @@ public abstract class BaseGUI implements GUIInterface {
     @Override
     public Inventory getInventory() {
         return inventory;
+    }
+
+    @Override
+    public void onClose(InventoryCloseEvent event) {
+        //如果界面需要在关闭时执行逻辑,请写在此处
     }
 }

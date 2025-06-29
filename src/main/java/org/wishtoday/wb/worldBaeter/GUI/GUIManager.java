@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.Impls.GUIInterface;
 
@@ -47,5 +48,13 @@ public class GUIManager {
                 , event.getAction()
                 , event.getSlot()
                 , event);
+    }
+    public static void handlerClose(InventoryCloseEvent event) {
+        Component title = event.getView().title();
+        HumanEntity humanEntity = event.getPlayer();
+        GUIInterface gui = getGUI(title);
+        if (gui == null) return;
+        if (!(humanEntity instanceof Player)) return;
+        gui.onClose(event);
     }
 }
