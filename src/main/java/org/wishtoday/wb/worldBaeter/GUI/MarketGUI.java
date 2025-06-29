@@ -42,8 +42,8 @@ public class MarketGUI extends BaseGUI {
         for (int i = 48; i < 51; i++) {
             addItemNameAndActionAutoRefresh(
                     i,
-                    "上一页",
-                    Material.DIAMOND,
+                    "回退",
+                    Material.IRON_INGOT,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage("你点击了回退");
                     }
