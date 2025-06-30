@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Item;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -12,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.wishtoday.wb.worldBaeter.WorldBaeter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -98,6 +101,11 @@ public class ItemUtil {
         stack.setItemMeta(meta);
         return uuid;
     }
+    public static boolean hasUUIDFromItem(ItemStack item) {
+        boolean has = item.getItemMeta().getPersistentDataContainer().has(ITEM_UUID_KEY, PersistentDataTypes.UUID);
+        UUID uuid = item.getItemMeta().getPersistentDataContainer().get(ITEM_UUID_KEY, PersistentDataTypes.UUID);
+        return has && uuid != null;
+    }
     public static UUID addUUIDToItem(ItemStack stack) {
         UUID uuid = UUID.randomUUID();
         addUUIDToItem(stack, uuid);
@@ -116,5 +124,15 @@ public class ItemUtil {
         if (container.has(ITEM_UUID_KEY, PersistentDataTypes.UUID)) {
             container.remove(ITEM_UUID_KEY);
         }
+    }
+    @NotNull
+    public static List<ItemStack> getItems(Inventory inventory, int... slot) {
+        ArrayList<ItemStack> arrayList = new ArrayList<>();
+        for (int i : slot) {
+            ItemStack item = inventory.getItem(i);
+            if (item == null) continue;
+            arrayList.add(item);
+        }
+        return arrayList;
     }
 }

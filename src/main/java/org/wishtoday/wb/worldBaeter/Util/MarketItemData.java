@@ -30,11 +30,13 @@ public class MarketItemData {
         this.item = item;
         this.needItem = needItem;
         this.player = player;
+        tag = 0;
     }
     public MarketItemData(List<ItemStack> item, List<ItemStack> needItem, Player player) {
         this.item = item;
         this.needItem = needItem;
         this.player = new PlayerData(player);
+        tag = 0;
     }
 
     public List<ItemStack> getItem() {

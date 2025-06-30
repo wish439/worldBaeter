@@ -10,7 +10,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.wishtoday.wb.Impls.ClickAction;
+import org.wishtoday.wb.worldBaeter.GUI.MarketGUI;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -96,7 +98,22 @@ public class GuiUtils {
     }
     public static boolean isFull(Inventory inventory, int slot) {
         @Nullable ItemStack[] contents = inventory.getContents();
-        return contents.length == slot;
+        int i = 0;
+        for (ItemStack content : contents) {
+            if (content == null) continue;
+            i++;
+        }
+        //int length = contents.length;
+        return i == slot;
+    }
+    public static Inventory cloneInventory(Inventory inventory) {
+        Inventory itemStacks = Bukkit.createInventory(null, inventory.getSize(), MarketGUI.title);
+        for (int i = 0; i < inventory.getSize(); i++) {
+            ItemStack item = inventory.getItem(i);
+            if (item == null) continue;
+            itemStacks.setItem(i, item);
+        }
+        return itemStacks;
     }
 
 }

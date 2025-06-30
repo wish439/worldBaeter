@@ -75,6 +75,12 @@ public abstract class BaseGUI implements GUIInterface {
         addItems.put(slot, item);
         listeners.put(uuid, action);
     }
+    public void addItemNameAndAction(ItemStack item, ClickAction action) {
+        UUID uuid = ItemUtil.addUUIDToItem(item);
+        inventory.addItem(item);
+        listeners.put(uuid, action);
+    }
+
 
     public void addItemNameAndAction(int slot
             , String name

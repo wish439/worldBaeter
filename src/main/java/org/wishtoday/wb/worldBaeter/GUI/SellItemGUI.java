@@ -8,25 +8,56 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
+import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
+import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
 import org.wishtoday.wb.worldBaeter.WorldBaeter;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SellItemGUI extends BaseGUI {
+    private static final Material CHOOSENEEDITEM = Material.YELLOW_STAINED_GLASS_PANE;
     @NotNull
     public static final NamespacedKey PLAYER_CLICK_SLOT = NamespacedKey.fromString("player_click_slot", WorldBaeter.getInstance());
     @NotNull
     public static final NamespacedKey IS_CLICKED = NamespacedKey.fromString("is_clicked", WorldBaeter.getInstance());
     public static final Component GUI_NAME = Component.text("Sell Item", NamedTextColor.GOLD);
     public static final Map<UUID, SellItemGUI> GUI_MAP = new HashMap<>();
+    private static final int[] needItemSlots = {
+            5, 6, 7, 8,
+            14, 15, 16, 17,
+            23, 24, 25, 26,
+            32, 33, 34, 35,
+            41, 42, 43, 44
+    };
+    private static final int[] itemSlots = {
+            0, 1, 2, 3,
+            9, 10, 11, 12,
+            18, 19, 20, 21,
+            27, 28, 29, 30,
+            36, 37, 38, 39
+    };
 
     public SellItemGUI() {
         super(GUI_NAME, GuiUtils.BIGCHESTSIZE);
+    }
+
+    @NotNull
+    private MarketItemData parseFromSlot(Player player) {
+        List<ItemStack> items = ItemUtil.getItems(inventory, itemSlots);
+        List<ItemStack> needItemSlot = ItemUtil.getItems(inventory, needItemSlots);
+        needItemSlot = needItemSlot.stream().filter(itemStack -> ItemUtil.hasUUIDFromItem(itemStack) && !(itemStack.getType() == CHOOSENEEDITEM)).toList();
+        return new MarketItemData(items, needItemSlot, player);
+    }
+
+    private void confirm(Player player) {
+        MarketItemData marketItemData = parseFromSlot(player);
+        MarketGUI instance = MarketGUI.getInstance();
+        instance.addItemToGUI(Objects.requireNonNullElse(marketItemData.getItem().getFirst(),new ItemStack(Material.BARRIER)), marketItemData);
+        new NavGUI().open(player);
     }
 
     @Override
@@ -67,6 +98,7 @@ public class SellItemGUI extends BaseGUI {
                     Material.GREEN_STAINED_GLASS_PANE,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage(Component.text("你点击了\"确认交易\""));
+                        confirm(player);
                     }
             );
         }
@@ -83,18 +115,11 @@ public class SellItemGUI extends BaseGUI {
                     }
             );
         }
-        int[] slots = {
-                5, 6, 7, 8,
-                14, 15, 16, 17,
-                23, 24, 25, 26,
-                32, 33, 34, 35,
-                41, 42, 43, 44
-        };
-        for (int addSize : slots) {
+        for (int addSize : needItemSlots) {
             addItemNameAndAction(
                     addSize,
                     "选择需要的物品",
-                    Material.YELLOW_STAINED_GLASS_PANE,
+                    CHOOSENEEDITEM,
                     (player
                             , item
                             , clickType

@@ -7,37 +7,87 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.wishtoday.wb.Impls.ClickAction;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
+import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
+import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
+import org.wishtoday.wb.worldBaeter.Util.PlayerData;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MarketGUI extends BaseGUI {
     public static Component title = Component.text("Market GUI", NamedTextColor.GREEN);
     private static MarketGUI instance;
     private List<Inventory> invs;
+    private final Map<ItemStack, MarketItemData> items;
 
 
     private MarketGUI() {
         super(title, GuiUtils.BIGCHESTSIZE);
         invs = new ArrayList<>();
         invs.add(inventory);
+        items = new HashMap<>();
+        /*ArrayList<ItemStack> list1 = new ArrayList<>();
+        list1.add(new ItemStack(Material.DIRT));
+        ArrayList<ItemStack> list2 = new ArrayList<>();
+        list2.add(new ItemStack(Material.DIAMOND));
+        MarketItemData marketItemData = new MarketItemData(list1, list2, new PlayerData(UUID.randomUUID(), "Test"));
+        for (int i = 0; i < 44; i++) {
+            addItemToGUI(new ItemStack(Material.BARRIER),marketItemData);
+        }*/
     }
 
     @Override
-    public void open(Player player,int index) {
+    public void open(Player player, int index) {
         player.closeInventory();
         Inventory first = invs.get(index);
         player.openInventory(first);
     }
 
-    public void addItemAndAutoExpansion(ItemStack item) {
+    public void addItemAndAction(
+            ItemStack item
+            , MarketItemData itemData
+            , ClickAction action) {
+        UUID uuid = ItemUtil.addUUIDToItem(item);
+        listeners.put(uuid, action);
+        items.put(item, itemData);
+    }
+
+    public void addItemToGUI(
+            ItemStack item
+            , MarketItemData itemData) {
+        addItemAndAction(item, itemData,
+                (player
+                        , item1
+                        , clickType
+                        , action
+                        , slot
+                        , event) -> {
+
+                });
+        reloadInventory();
+    }
+
+    public void addItemAndAuto() {
         Inventory last = invs.getLast();
-        if (GuiUtils.isFull(last,last.getSize())) {
-            initializeItems();
-            invs.add(inventory);
+        for (Map.Entry<ItemStack, MarketItemData> entry : items.entrySet()) {
+            if (GuiUtils.isFull(last, last.getSize())) {
+                invs.add(GuiUtils.cloneInventory(inventory));
+                initializeItems();
+            }
+            last.addItem(entry.getKey());
         }
-        invs.getLast().addItem(item);
+        System.out.println("addItemAndAuto" + invs.size());
+    }
+
+    public void reloadInventory() {
+        invs.clear();
+        initializeItems();
+        invs.add(inventory);
+        Inventory last = invs.getLast();
+        last.clear();
+        initializeItems();
+        addItemAndAuto();
     }
 
     @Override
@@ -47,6 +97,7 @@ public class MarketGUI extends BaseGUI {
 
     @Override
     protected void initializeItems() {
+        inventory.clear();
         for (int i = 45; i < 48; i++) {
             addItemNameAndActionAutoRefresh(
                     i,
@@ -54,6 +105,7 @@ public class MarketGUI extends BaseGUI {
                     Material.DIAMOND,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage("你点击了上一页");
+                        open(player,0);
                     }
             );
         }
@@ -75,6 +127,7 @@ public class MarketGUI extends BaseGUI {
                     Material.RED_STAINED_GLASS,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage("你点击了下一页");
+                        open(player,1);
                     }
             );
         }
