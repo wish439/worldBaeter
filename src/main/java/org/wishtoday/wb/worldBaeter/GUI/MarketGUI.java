@@ -1,7 +1,6 @@
 package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -10,7 +9,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.Impls.ClickAction;
 import org.wishtoday.wb.worldBaeter.Util.*;
-import net.kyori.adventure.text.format.TextColor;
+
 import java.util.Map;
 import java.util.List;
 

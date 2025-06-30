@@ -1,7 +1,6 @@
 package org.wishtoday.wb.worldBaeter.Util;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -9,11 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import org.wishtoday.wb.Impls.ClickAction;
 import org.wishtoday.wb.worldBaeter.GUI.MarketGUI;
-
-import java.util.Arrays;
-import java.util.Map;
 
 /**
  * GUI工具类 - 提供创建和管理GUI的实用方法
