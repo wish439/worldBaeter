@@ -138,6 +138,17 @@ public class MarketGUI extends BaseGUI {
                     }
             );
         }
+        for (int i = 45; i < 54; i++) {
+            if (i == 46 || i == 49 || i == 52) continue;
+            addItemNameAndActionAutoRefresh(
+                    i,
+                    " ",
+                    Material.GRAY_STAINED_GLASS_PANE,
+                    (player, item, clickType, action, slot, event) -> {
+                        event.setCancelled(true); // 阻止任何交互
+                    }
+            );
+        }
     }
 
     public static MarketGUI getInstance() {
