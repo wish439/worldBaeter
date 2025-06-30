@@ -1,6 +1,7 @@
 package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -8,19 +9,25 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.Impls.ClickAction;
-import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
-import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
-import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
-import org.wishtoday.wb.worldBaeter.Util.PlayerData;
+import org.wishtoday.wb.worldBaeter.Util.*;
+import net.kyori.adventure.text.format.TextColor;
+import java.util.Map;
+import java.util.List;
 
 import java.util.*;
 
 public class MarketGUI extends BaseGUI {
-    public static Component title = Component.text("Market GUI", NamedTextColor.GREEN);
+    // 使用渐变工具类创建标题
+    public static Component title = TextGradient.createGradient(
+            "交易市场",
+            NamedTextColor.WHITE,
+            NamedTextColor.DARK_GRAY,
+            NamedTextColor.GOLD
+    );
+
     private static MarketGUI instance;
     private List<Inventory> invs;
     private final Map<ItemStack, MarketItemData> items;
-
 
     private MarketGUI() {
         super(title, GuiUtils.BIGCHESTSIZE);
@@ -98,33 +105,33 @@ public class MarketGUI extends BaseGUI {
     @Override
     protected void initializeItems() {
         inventory.clear();
-        for (int i = 45; i < 48; i++) {
+        for (int i = 46; i < 47; i++) {
             addItemNameAndActionAutoRefresh(
                     i,
                     "上一页",
-                    Material.DIAMOND,
+                    Material.OAK_BUTTON,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage("你点击了上一页");
                         open(player,0);
                     }
             );
         }
-        for (int i = 48; i < 51; i++) {
+        for (int i = 49; i < 50; i++) {
             addItemNameAndActionAutoRefresh(
                     i,
                     "回退",
-                    Material.IRON_INGOT,
+                    Material.BELL,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage("你点击了回退");
                         new NavGUI().open(player);
                     }
             );
         }
-        for (int i = 51; i < 54; i++) {
+        for (int i = 52; i < 53; i++) {
             addItemNameAndActionAutoRefresh(
                     i,
                     "下一页",
-                    Material.RED_STAINED_GLASS,
+                    Material.ARROW,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage("你点击了下一页");
                         open(player,1);

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 
+
 // 主导航菜单GUI，提供核心功能入口
 public class NavGUI extends BaseGUI {
     // 固定GUI标题
