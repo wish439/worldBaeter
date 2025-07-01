@@ -135,4 +135,9 @@ public class ItemUtil {
         }
         return arrayList;
     }
+    public static void setItems(Inventory inventory, ItemStack item, int... slot) {
+        for (int i : slot) {
+            inventory.setItem(i, item);
+        }
+    }
 }

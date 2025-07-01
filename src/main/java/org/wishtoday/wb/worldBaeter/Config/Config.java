@@ -1,6 +1,7 @@
 package org.wishtoday.wb.worldBaeter.Config;
 
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -20,20 +21,8 @@ import java.util.Map;
 public class Config {
     public static final File CONFIG_FILE = new File(WorldBaeter.getInstance().getDataFolder(), "datas.yml");
     private static YamlConfiguration config = new YamlConfiguration();
-
-    /*public static void load() {
-        if (!CONFIG_FILE.exists()) {
-            CONFIG_FILE.getParentFile().mkdirs();
-            save();
-        }
-        try {
-            config.load(CONFIG_FILE);
-            System.out.println(config.getConfigurationSection("market_items"));
-            loadDatas();
-        } catch (IOException | InvalidConfigurationException e) {
-            WorldBaeter.getInstance().getLogger().warning("Failed to load config file!" + e.getMessage());
-        }
-    }*/
+    private static FileConfiguration defaultConfig = WorldBaeter.getInstance().getConfig();
+    public static Integer max_sell_count = defaultConfig.getInt(ConfigPath.MAX_SELL_COUNT.s);
 
     private static void loadDatas() {
         Map<ItemStack, MarketItemData> object = config.getObject("market_items", Map.class);

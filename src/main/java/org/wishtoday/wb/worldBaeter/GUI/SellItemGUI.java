@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -14,26 +15,16 @@ import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
 import org.wishtoday.wb.worldBaeter.WorldBaeter;
-import org.wishtoday.wb.worldBaeter.Util.TextGradient;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-
 
 import java.util.*;
 
 public class SellItemGUI extends BaseGUI {
     private static final Material CHOOSENEEDITEM = Material.YELLOW_STAINED_GLASS_PANE;
     @NotNull
-    public static final NamespacedKey PLAYER_CLICK_SLOT = Objects.requireNonNull(NamespacedKey.fromString("player_click_slot", WorldBaeter.getInstance()));
+    public static final NamespacedKey PLAYER_CLICK_SLOT = NamespacedKey.fromString("player_click_slot", WorldBaeter.getInstance());
     @NotNull
-    public static final NamespacedKey IS_CLICKED = Objects.requireNonNull(NamespacedKey.fromString("is_clicked", WorldBaeter.getInstance()));
-    public static final Component GUI_NAME = TextGradient.createGradient(
-            "物品交换",
-            new TextColor[]{
-                    TextColor.color(0xff6a00),   // 活力橙
-                    TextColor.color(0xffd54f)    // 金黄
-            }
-    ).decoration(TextDecoration.BOLD, true);
+    public static final NamespacedKey IS_CLICKED = NamespacedKey.fromString("is_clicked", WorldBaeter.getInstance());
+    public static final Component GUI_NAME = Component.text("Sell Item", NamedTextColor.GOLD);
     public static final Map<UUID, SellItemGUI> GUI_MAP = new HashMap<>();
     private static final int[] needItemSlots = {
             5, 6, 7, 8,
@@ -133,7 +124,9 @@ public class SellItemGUI extends BaseGUI {
                             , item
                             , clickType
                             , action
-                            , slot, event) -> switchItemEffect(player, slot)
+                            , slot, event) -> {
+                        switchItemEffect(player, slot);
+                    }
             );
         }
     }
@@ -148,4 +141,8 @@ public class SellItemGUI extends BaseGUI {
         player.sendMessage(Component.text("请在输入框输入你想要的物品名称(中英文皆可)"));
     }
 
+    @Override
+    public void onClose(InventoryCloseEvent event) {
+
+    }
 }
