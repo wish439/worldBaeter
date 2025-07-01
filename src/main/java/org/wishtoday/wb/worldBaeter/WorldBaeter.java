@@ -39,6 +39,9 @@ public final class WorldBaeter extends JavaPlugin {
         registerEvent(this.getServer().getPluginManager(),this);
         // 3. 注册插件命令
         registerCommands();
+        registerConfigClass();
+    }
+    private void registerConfigClass() {
         ConfigurationSerialization.registerClass(MarketItemData.class);
         ConfigurationSerialization.registerClass(PlayerData.class);
     }
