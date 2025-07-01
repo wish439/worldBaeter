@@ -1,7 +1,6 @@
 package org.wishtoday.wb.worldBaeter.GUI;
 
 
-
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -13,7 +12,6 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 
 // 主导航菜单GUI，提供核心功能入口
-
 public class NavGUI extends BaseGUI {
 
     // 固定GUI标题
@@ -149,9 +147,9 @@ public class NavGUI extends BaseGUI {
                         , item
                         , clickType
                         , action
-                        , slot
+                        , __slot
                         , event) -> {
-                    player.sendMessage(Component.text("你点击了\"出售\""));
+                    player.sendMessage(Component.text("你点击了\"物品交换\""));
                     SellItemGUI gui = new SellItemGUI();
                     gui.initializeItems();
                     gui.open(player);
@@ -164,8 +162,8 @@ public class NavGUI extends BaseGUI {
                 (player
                         , item
                         , clickType
-                        , action, slot, event) -> {
-                    player.sendMessage(Component.text("你点击了\"浏览商品\""));
+                        , action, __slot, event) -> {
+                    player.sendMessage(Component.text("你点击了\"全服市场\""));
 
                     MarketGUI.getInstance().open(player,0);
                 });
@@ -175,8 +173,8 @@ public class NavGUI extends BaseGUI {
                 12,
                 colored_251052749122312209862180630340(),
                 Material.CHEST,
-                (player, item, clickType, action, slot, event) -> {
-                    player.sendMessage(Component.text("你点击了\"我正在出售的商品\""));
+                (player, item, clickType, action, __slot, event) -> {
+                    player.sendMessage(Component.text("你点击了\"卖家中心\""));
                 });
 
         // 取回物品按钮（槽位13）
@@ -184,8 +182,8 @@ public class NavGUI extends BaseGUI {
                 13,
                 colored_21462222382928921697(),
                 Material.HOPPER,
-                (player, item, clickType, action, slot, event) -> {
-                    player.sendMessage(Component.text("你点击了\"取回物品\""));
+                (player, item, clickType, action, __slot, event) -> {
+                    player.sendMessage(Component.text("你点击了\"取回交易物品\""));
                 });
 
         // 购买历史按钮（槽位14，点击后关闭GUI）
@@ -193,7 +191,7 @@ public class NavGUI extends BaseGUI {
                 14,
                 "购买历史",
                 Material.BARRIER,
-                (player, item, clickType, action, slot, event) -> {
+                (player, item, clickType, action, __slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"购买历史\""));
                     player.closeInventory();
                 }
@@ -203,7 +201,7 @@ public class NavGUI extends BaseGUI {
                 15,
                 "出售历史",
                 Material.BARRIER,
-                (player, item, clickType, action, slot, event) -> {
+                (player, item, clickType, action, __slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"出售历史\""));
                     player.closeInventory();
                 }
@@ -214,8 +212,8 @@ public class NavGUI extends BaseGUI {
                 16,
                 colored_3703831665(),
                 Material.ENDER_CHEST,
-                (player, item, clickType, action, slot, event) -> {
-                    player.sendMessage(Component.text("你点击了\"取出交易物\""));
+                (player, item, clickType, action, __slot, event) -> {
+                    player.sendMessage(Component.text("你点击了\"领取交易货物\""));
                 }
         );
         // 由于直接定位市场页数功能（槽位21）
@@ -223,7 +221,7 @@ public class NavGUI extends BaseGUI {
                 21,
                 colored_2885720987363393671621040253512345039029(),
                 Material.PAPER,
-                (player, item, clickType, action, slot, event) -> {
+                (player, item, clickType, action, __slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"转到指定页\""));
                 }
         );
@@ -233,7 +231,7 @@ public class NavGUI extends BaseGUI {
                 22,
                 colored_3686420986(),
                 Material.OAK_DOOR,
-                (player, item, clickType, action, slot, event) -> {
+                (player, item, clickType, action, __slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"退出\""));
                     player.closeInventory();
                 }
@@ -244,7 +242,7 @@ public class NavGUI extends BaseGUI {
                 23,
                 colored_296092347820986218062101534920(),
                 Material.PLAYER_HEAD,
-                (player, item, clickType, action, slot, event) -> {
+                (player, item, clickType, action, __slot, event) -> {
                     player.sendMessage(Component.text("你点击了\"玩家出售列表\""));
                 }
         );
