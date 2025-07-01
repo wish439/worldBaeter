@@ -2,12 +2,17 @@ package org.wishtoday.wb.worldBaeter;
 
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import org.bukkit.Material;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.wb.worldBaeter.Command.MarketCommand;
-import org.wishtoday.wb.worldBaeter.GUI.NavGUI;
-import org.wishtoday.wb.worldBaeter.GUI.SellItemGUI;
+import org.wishtoday.wb.worldBaeter.Config.Config;
+import org.wishtoday.wb.worldBaeter.GUI.MarketGUI;
 import org.wishtoday.wb.worldBaeter.Util.ConfigUtils;
+import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
+import org.wishtoday.wb.worldBaeter.Util.PlayerData;
+
+import java.util.Map;
 
 import static org.wishtoday.wb.worldBaeter.Events.RegisterEvent.registerEvent;
 /**
@@ -26,11 +31,16 @@ public final class WorldBaeter extends JavaPlugin {
         // ========== 插件启动逻辑 ========== //
         plugin = this;
         this.saveDefaultConfig();
-        ConfigUtils.initializeMap();
+        ConfigUtils.initializeMap();// 确保数据文件夹存在
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdirs();
+        }
         // 1. 注册所有事件监听器
         registerEvent(this.getServer().getPluginManager(),this);
         // 3. 注册插件命令
         registerCommands();
+        ConfigurationSerialization.registerClass(MarketItemData.class);
+        ConfigurationSerialization.registerClass(PlayerData.class);
     }
     /**
      * 注册插件命令（使用Paper的Brigadier命令系统）
@@ -52,6 +62,7 @@ public final class WorldBaeter extends JavaPlugin {
     public void onDisable() {
         // ========== 插件关闭逻辑 ========== //
         // 此处可添加数据保存、资源释放等操作
+        //Config.save();
     }
     /**
      * 获取插件单例实例
