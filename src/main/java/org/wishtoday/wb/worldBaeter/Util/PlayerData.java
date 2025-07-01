@@ -1,11 +1,16 @@
 package org.wishtoday.wb.worldBaeter.Util;
 
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class PlayerData {
+public class PlayerData implements ConfigurationSerializable {
     private UUID uuid;
     private String name;
     public PlayerData(UUID uuid, String name) {
@@ -51,5 +56,18 @@ public class PlayerData {
                 "uuid=" + uuid +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public @NotNull Map<String, Object> serialize() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("uuid", uuid.toString());
+        map.put("name", name);
+        return map;
+    }
+    public static PlayerData deserialize(Map<String, Object> args) {
+        UUID uuid = UUID.fromString((String) args.get("uuid"));
+        String name = (String) args.get("name");
+        return new PlayerData(uuid, name);
     }
 }

@@ -1,7 +1,6 @@
 package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,8 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.wishtoday.wb.Impls.ClickAction;
+import org.wishtoday.wb.worldBaeter.Config.Config;
 import org.wishtoday.wb.worldBaeter.Util.*;
-import net.kyori.adventure.text.format.TextColor;
+
 import java.util.Map;
 import java.util.List;
 
@@ -27,13 +27,16 @@ public class MarketGUI extends BaseGUI {
 
     private static MarketGUI instance;
     private List<Inventory> invs;
-    private final Map<ItemStack, MarketItemData> items;
+    private Map<ItemStack, MarketItemData> items;
 
     private MarketGUI() {
         super(title, GuiUtils.BIGCHESTSIZE);
         invs = new ArrayList<>();
         invs.add(inventory);
-        items = new HashMap<>();
+        items = new LinkedHashMap<>();
+        Map<ItemStack, MarketItemData> map = Config.loadItemStackMap();
+        items.putAll(map);
+        reloadInventory();
         /*ArrayList<ItemStack> list1 = new ArrayList<>();
         list1.add(new ItemStack(Material.DIRT));
         ArrayList<ItemStack> list2 = new ArrayList<>();
@@ -42,6 +45,9 @@ public class MarketGUI extends BaseGUI {
         for (int i = 0; i < 44; i++) {
             addItemToGUI(new ItemStack(Material.BARRIER),marketItemData);
         }*/
+    }
+    public void setItems(Map<ItemStack, MarketItemData> map) {
+        this.items = map;
     }
 
     @Override
@@ -79,12 +85,14 @@ public class MarketGUI extends BaseGUI {
         Inventory last = invs.getLast();
         for (Map.Entry<ItemStack, MarketItemData> entry : items.entrySet()) {
             if (GuiUtils.isFull(last, last.getSize())) {
-                invs.add(GuiUtils.cloneInventory(inventory));
+                invs.addFirst(GuiUtils.cloneInventory(inventory));
                 initializeItems();
             }
             last.addItem(entry.getKey());
         }
-        System.out.println("addItemAndAuto" + invs.size());
+        Config.save(items);
+        //Config.setConfig("market_items", items);
+        //System.out.println("addItemAndAuto" + invs.size());
     }
 
     public void reloadInventory() {
