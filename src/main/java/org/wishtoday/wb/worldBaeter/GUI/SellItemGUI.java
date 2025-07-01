@@ -9,8 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+import org.wishtoday.wb.worldBaeter.Config.Config;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
@@ -24,6 +26,8 @@ public class SellItemGUI extends BaseGUI {
     public static final NamespacedKey PLAYER_CLICK_SLOT = NamespacedKey.fromString("player_click_slot", WorldBaeter.getInstance());
     @NotNull
     public static final NamespacedKey IS_CLICKED = NamespacedKey.fromString("is_clicked", WorldBaeter.getInstance());
+    @NotNull
+    public static final NamespacedKey PLAYER_SELL_COUNT = NamespacedKey.fromString("player_sell_count", WorldBaeter.getInstance());
     public static final Component GUI_NAME = Component.text("Sell Item", NamedTextColor.GOLD);
     public static final Map<UUID, SellItemGUI> GUI_MAP = new HashMap<>();
     private static final int[] needItemSlots = {
@@ -54,10 +58,43 @@ public class SellItemGUI extends BaseGUI {
     }
 
     private void confirm(Player player) {
+        if (getSellCount(player) >= Config.max_sell_count) {
+            player.closeInventory(InventoryCloseEvent.Reason.PLAYER);
+            player.sendMessage("您的售卖次数已达上限");
+            return;
+        }
         MarketItemData marketItemData = parseFromSlot(player);
         MarketGUI instance = MarketGUI.getInstance();
         instance.addItemToGUI(Objects.requireNonNullElse(marketItemData.getItem().getFirst(),new ItemStack(Material.BARRIER)), marketItemData);
         new NavGUI().open(player);
+    }
+    private void clearItems() {
+        ItemUtil.setItems(inventory,new ItemStack(Material.AIR),itemSlots);
+    }
+    private int getSellCount(Player player) {
+        PersistentDataContainer container = player.getPersistentDataContainer();
+        if (!container.has(PLAYER_SELL_COUNT, PersistentDataType.INTEGER)) return 0;
+        Integer i = container.get(PLAYER_SELL_COUNT, PersistentDataType.INTEGER);
+        if (i == null) return 0;
+        return i;
+    }
+    private void addOrCreateSellCount(Player player) {
+        PersistentDataContainer container = player.getPersistentDataContainer();
+        Integer i = 1;
+        if (container.has(PLAYER_SELL_COUNT, PersistentDataType.INTEGER)) {
+            i = container.get(PLAYER_SELL_COUNT, PersistentDataType.INTEGER);
+            if (i == null) return;
+        } else {
+            container.set(PLAYER_SELL_COUNT, PersistentDataType.INTEGER,1);
+        }
+        container.set(PLAYER_SELL_COUNT, PersistentDataType.INTEGER, i + 1);
+    }
+    private void removeSellCount(Player player) {
+        PersistentDataContainer container = player.getPersistentDataContainer();
+        if (!container.has(PLAYER_SELL_COUNT, PersistentDataType.INTEGER)) return;
+        Integer i = container.get(PLAYER_SELL_COUNT, PersistentDataType.INTEGER);
+        if (i == null) return;
+        container.set(PLAYER_SELL_COUNT, PersistentDataType.INTEGER, i - 1);
     }
 
     @Override
