@@ -1,6 +1,7 @@
 package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -64,7 +65,16 @@ public abstract class BaseGUI implements GUIInterface {
     protected abstract void initializeItems();
 
     public void addItem(int slot, String name, Material material, ClickAction action) {
-        TextComponent text = Component.text(name);
+        LegacyComponentSerializer legacy = LegacyComponentSerializer.builder()
+                .hexColors()
+                .character('§')
+                .build();
+        TextComponent text;
+        if(name.indexOf('§') >= 0){
+            text = (TextComponent) legacy.deserialize(name);
+        }else{
+            text = Component.text(name);
+        }
         UUID uuid = UUID.randomUUID();
         addItems.put(slot, ItemUtil.setName(text, material, uuid));
         listeners.put(uuid, action);
@@ -86,7 +96,16 @@ public abstract class BaseGUI implements GUIInterface {
             , String name
             , Material material
             , ClickAction action) {
-        TextComponent text = Component.text(name);// 创建文本组件
+        LegacyComponentSerializer legacy = LegacyComponentSerializer.builder()
+                .hexColors()
+                .character('§')
+                .build();
+        TextComponent text;
+        if(name.indexOf('§') >= 0){
+            text = (TextComponent) legacy.deserialize(name);
+        }else{
+            text = Component.text(name);
+        }// 创建文本组件
         UUID uuid = UUID.randomUUID();
         // 通过工具类创建带名称的物品，并存入映射
         addItems.put(slot, ItemUtil.setName(text, material,uuid));
@@ -99,7 +118,16 @@ public abstract class BaseGUI implements GUIInterface {
             , String name
             , Material material
             , ClickAction action) {
-        TextComponent text = Component.text(name);// 创建文本组件
+        LegacyComponentSerializer legacy = LegacyComponentSerializer.builder()
+                .hexColors()
+                .character('§')
+                .build();
+        TextComponent text;
+        if(name.indexOf('§') >= 0){
+            text = (TextComponent) legacy.deserialize(name);
+        }else{
+            text = Component.text(name);
+        }// 创建文本组件
         UUID uuid = UUID.randomUUID();
         addItems.put(slot, ItemUtil.setName(text, material,uuid));
         // 关联文本组件和点击动作（用于后续事件触发）
@@ -111,7 +139,16 @@ public abstract class BaseGUI implements GUIInterface {
             String name
             , Material material
             , ClickAction action) {
-        TextComponent text = Component.text(name);// 创建文本组件
+        LegacyComponentSerializer legacy = LegacyComponentSerializer.builder()
+                .hexColors()
+                .character('§')
+                .build();
+        TextComponent text;
+        if(name.indexOf('§') >= 0){
+            text = (TextComponent) legacy.deserialize(name);
+        }else{
+            text = Component.text(name);
+        }// 创建文本组件
         UUID uuid = UUID.randomUUID();
         inventory.addItem(ItemUtil.setName(text, material,uuid));
         // 关联文本组件和点击动作（用于后续事件触发）
