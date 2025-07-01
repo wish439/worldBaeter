@@ -663,7 +663,6 @@ item_id:
   COMPASS: "指南针"
   POTTED_SPRUCE_SAPLING: "云杉树苗盆栽"
   VINE: "藤蔓"
-  HOWL_POTTERY_SHERD: "狼嚎纹样陶片"
   BUBBLE_COLUMN: "气泡柱"
   INFESTED_STONE_BRICKS: "虫蚀石砖"
   GOLDEN_CHESTPLATE: "金胸甲"
@@ -811,7 +810,6 @@ item_id:
   WAXED_WEATHERED_COPPER: "涂蜡的锈蚀铜块"
   MUSHROOM_STEM: "蘑菇柄"
   BLUE_TERRACOTTA: "蓝色陶瓦"
-  EXPLORER_POTTERY_SHERD: "探险纹样陶片"
   VEX_ARMOR_TRIM_SMITHING_TEMPLATE: "锻造模板"
   BROWN_MUSHROOM_BLOCK: "棕色蘑菇方块"
   DEAD_TUBE_CORAL_FAN: "失活的管珊瑚扇"
@@ -1494,3 +1492,5 @@ item_id:
   OXIDIZED_CHISELED_COPPER: "氧化的雕纹铜块"
   INFESTED_STONE: "虫蚀石头"
   YELLOW_GLAZED_TERRACOTTA: "黄色带釉陶瓦"
+game:
+  max_sell_count: 3
