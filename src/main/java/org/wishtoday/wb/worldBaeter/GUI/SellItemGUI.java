@@ -14,6 +14,10 @@ import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
 import org.wishtoday.wb.worldBaeter.WorldBaeter;
+import org.wishtoday.wb.worldBaeter.Util.TextGradient;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+
 
 import java.util.*;
 
@@ -23,7 +27,13 @@ public class SellItemGUI extends BaseGUI {
     public static final NamespacedKey PLAYER_CLICK_SLOT = Objects.requireNonNull(NamespacedKey.fromString("player_click_slot", WorldBaeter.getInstance()));
     @NotNull
     public static final NamespacedKey IS_CLICKED = Objects.requireNonNull(NamespacedKey.fromString("is_clicked", WorldBaeter.getInstance()));
-    public static final Component GUI_NAME = Component.text("Sell Item", NamedTextColor.GOLD);
+    public static final Component GUI_NAME = TextGradient.createGradient(
+            "物品交换",
+            new TextColor[]{
+                    TextColor.color(0xff6a00),   // 活力橙
+                    TextColor.color(0xffd54f)    // 金黄
+            }
+    ).decoration(TextDecoration.BOLD, true);
     public static final Map<UUID, SellItemGUI> GUI_MAP = new HashMap<>();
     private static final int[] needItemSlots = {
             5, 6, 7, 8,
