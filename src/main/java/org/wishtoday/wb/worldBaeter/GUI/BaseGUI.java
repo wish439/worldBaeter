@@ -54,6 +54,7 @@ public abstract class BaseGUI implements GUIInterface {
     public void open(Player player) {
         player.closeInventory();
         initializeItems();
+        GUIManager.addToPlayerGUIMap(player, this);
         player.openInventory(inventory);
     }
 
@@ -188,5 +189,7 @@ public abstract class BaseGUI implements GUIInterface {
     @Override
     public void onClose(InventoryCloseEvent event) {
         //如果界面需要在关闭时执行逻辑,请写在此处
+        GUIManager.removeGUI(event.getView().title());
+        GUIManager.removeFromPlayerGUIMap((Player) event.getPlayer());
     }
 }

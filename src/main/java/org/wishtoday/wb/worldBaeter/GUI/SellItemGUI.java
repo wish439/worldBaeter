@@ -106,7 +106,7 @@ public class SellItemGUI extends BaseGUI {
                         player.openInventory(GUI_MAP.get(player.getUniqueId()).inventory);
                         return;
                     }
-                    player.openInventory(inventory);
+                    super.open(player);
                 }
         );
     }
