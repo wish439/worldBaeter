@@ -21,7 +21,7 @@ import org.wishtoday.wb.worldBaeter.WorldBaeter;
 import java.util.*;
 
 public class SellItemGUI extends BaseGUI {
-    private static final Material CHOOSENEEDITEM = Material.YELLOW_STAINED_GLASS_PANE;
+    private static final Material CHOOSINESS = Material.YELLOW_STAINED_GLASS_PANE;
     @NotNull
     public static final NamespacedKey PLAYER_CLICK_SLOT = Objects.requireNonNull(NamespacedKey.fromString("player_click_slot", WorldBaeter.getInstance()));
     @NotNull
@@ -53,7 +53,7 @@ public class SellItemGUI extends BaseGUI {
     private MarketItemData parseFromSlot(Player player) {
         List<ItemStack> items = ItemUtil.getItems(inventory, itemSlots);
         List<ItemStack> needItemSlot = ItemUtil.getItems(inventory, needItemSlots);
-        needItemSlot = needItemSlot.stream().filter(itemStack -> ItemUtil.hasUUIDFromItem(itemStack) && !(itemStack.getType() == CHOOSENEEDITEM)).toList();
+        needItemSlot = needItemSlot.stream().filter(itemStack -> ItemUtil.hasUUIDFromItem(itemStack) && !(itemStack.getType() == CHOOSINESS)).toList();
         return new MarketItemData(items, needItemSlot, player);
     }
 
@@ -69,9 +69,6 @@ public class SellItemGUI extends BaseGUI {
         new NavGUI().open(player);
     }
 
-    /**
-     *
-     */
     private void clearItems() {
         ItemUtil.setItems(inventory,new ItemStack(Material.AIR),itemSlots);
     }
@@ -157,7 +154,7 @@ public class SellItemGUI extends BaseGUI {
             );
         }
         for (int addSize : needItemSlots) {
-            addItemNameAndAction(addSize, "选择需要的物品", CHOOSENEEDITEM, (player
+            addItemNameAndAction(addSize, "选择需要的物品", CHOOSINESS, (player
                     , item
                     , clickType
                     , action
