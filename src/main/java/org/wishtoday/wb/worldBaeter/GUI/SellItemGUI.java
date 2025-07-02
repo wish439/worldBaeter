@@ -68,6 +68,10 @@ public class SellItemGUI extends BaseGUI {
         instance.addItemToGUI(Objects.requireNonNullElse(marketItemData.getItem().getFirst(),new ItemStack(Material.BARRIER)), marketItemData);
         new NavGUI().open(player);
     }
+
+    /**
+     *
+     */
     private void clearItems() {
         ItemUtil.setItems(inventory,new ItemStack(Material.AIR),itemSlots);
     }
@@ -153,18 +157,11 @@ public class SellItemGUI extends BaseGUI {
             );
         }
         for (int addSize : needItemSlots) {
-            addItemNameAndAction(
-                    addSize,
-                    "选择需要的物品",
-                    CHOOSENEEDITEM,
-                    (player
-                            , item
-                            , clickType
-                            , action
-                            , slot, event) -> {
-                        switchItemEffect(player, slot);
-                    }
-            );
+            addItemNameAndAction(addSize, "选择需要的物品", CHOOSENEEDITEM, (player
+                    , item
+                    , clickType
+                    , action
+                    , slot, event) -> switchItemEffect(player, slot));
         }
     }
 
