@@ -2,6 +2,7 @@ package org.wishtoday.wb.worldBaeter.GUI;
 
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
@@ -186,24 +187,33 @@ public class NavGUI extends BaseGUI {
                     player.sendMessage(Component.text("你点击了\"取回交易物品\""));
                 });
 
-        // 购买历史按钮（槽位14，点击后关闭GUI）
+        // 购买历史按钮（槽位 14）
         addItemNameAndAction(
                 14,
                 "购买历史",
                 Material.BARRIER,
                 (player, item, clickType, action, __slot, event) -> {
-                    player.sendMessage(Component.text("你点击了\"购买历史\""));
+                    // 阻止玩家把按钮拖出背包
+                    event.setCancelled(true);
+                    // 关闭当前 GUI
                     player.closeInventory();
-                }
-        );
-        // 出售历史按钮（槽位15，点击后关闭GUI）
+                    // 发送提示信息 —— 功能还在开发中
+                    player.sendMessage(Component.text("购买历史功能正在开发中，敬请期待！",
+                            NamedTextColor.YELLOW));
+                });
+        // 出售历史按钮（槽位 15）
         addItemNameAndAction(
                 15,
                 "出售历史",
                 Material.BARRIER,
                 (player, item, clickType, action, __slot, event) -> {
-                    player.sendMessage(Component.text("你点击了\"出售历史\""));
+                    // 阻止玩家把按钮拖出背包
+                    event.setCancelled(true);
+                    // 关闭当前 GUI
                     player.closeInventory();
+                    // 发送提示信息 —— 功能还在开发中
+                    player.sendMessage(Component.text("出售历史功能正在开发中，敬请期待！",
+                            NamedTextColor.YELLOW));
                 }
         );
 
