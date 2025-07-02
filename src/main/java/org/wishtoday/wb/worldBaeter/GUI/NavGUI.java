@@ -31,6 +31,14 @@ public class NavGUI extends BaseGUI {
 
     };
 
+    private static String colored() {
+
+        Component comp = TextGradient.createGradient("物品交换", SELL_COLORS)
+                .decoration(TextDecoration.BOLD, true);
+        return LEGACY.serialize(comp);
+
+    }
+
     // 渐变颜色：蓝 → 紫（全服市场按钮）
     private static final TextColor[] MARKET_COLORS = {
             TextColor.color(0x3498db),  // 蓝
@@ -125,14 +133,6 @@ public class NavGUI extends BaseGUI {
 
             .build();
 
-    private static String colored() {
-
-        Component comp = TextGradient.createGradient("物品交换", SELL_COLORS)
-                .decoration(TextDecoration.BOLD, true);
-        return LEGACY.serialize(comp);
-
-    }
-
     // 创建基础GUI（使用工具类生成带玻璃边框的库存）
     private final Inventory inventory = GuiUtils.createInventoryWithGlass(GuiUtils.SMALLCHESTSIZE, GUI_TITLE);
     public NavGUI() {
@@ -150,7 +150,7 @@ public class NavGUI extends BaseGUI {
         addItemNameAndAction(
                 10
                 , colored()
-                , Material.DIAMOND
+                , Material.LECTERN
                 , (player
                         , item
                         , clickType
