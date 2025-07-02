@@ -2,6 +2,8 @@ package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -16,19 +18,24 @@ import org.wishtoday.wb.worldBaeter.Config.Config;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
+import org.wishtoday.wb.worldBaeter.Util.TextGradient;
 import org.wishtoday.wb.worldBaeter.WorldBaeter;
 
 import java.util.*;
 
 public class SellItemGUI extends BaseGUI {
-    private static final Material CHOOSENEEDITEM = Material.YELLOW_STAINED_GLASS_PANE;
+    private static final Material CHOOSINESS = Material.YELLOW_STAINED_GLASS_PANE;
     @NotNull
     public static final NamespacedKey PLAYER_CLICK_SLOT = Objects.requireNonNull(NamespacedKey.fromString("player_click_slot", WorldBaeter.getInstance()));
     @NotNull
     public static final NamespacedKey IS_CLICKED = Objects.requireNonNull(NamespacedKey.fromString("is_clicked", WorldBaeter.getInstance()));
     @NotNull
     public static final NamespacedKey PLAYER_SELL_COUNT = Objects.requireNonNull(NamespacedKey.fromString("player_sell_count", WorldBaeter.getInstance()));
-    public static final Component GUI_NAME = Component.text("Sell Item", NamedTextColor.GOLD);
+    public static final Component GUI_NAME = TextGradient.createGradient(
+            "物品交换",
+            TextColor.color(0xff6a00),   // 活力橙
+            TextColor.color(0xffd54f)    // 金黄
+    ).decoration(TextDecoration.BOLD, true);
     public static final Map<UUID, SellItemGUI> GUI_MAP = new HashMap<>();
     private static final int[] needItemSlots = {
             5, 6, 7, 8,
@@ -53,7 +60,7 @@ public class SellItemGUI extends BaseGUI {
     private MarketItemData parseFromSlot(Player player) {
         List<ItemStack> items = ItemUtil.getItems(inventory, itemSlots);
         List<ItemStack> needItemSlot = ItemUtil.getItems(inventory, needItemSlots);
-        needItemSlot = needItemSlot.stream().filter(itemStack -> ItemUtil.hasUUIDFromItem(itemStack) && !(itemStack.getType() == CHOOSENEEDITEM)).toList();
+        needItemSlot = needItemSlot.stream().filter(itemStack -> ItemUtil.hasUUIDFromItem(itemStack) && !(itemStack.getType() == CHOOSINESS)).toList();
         return new MarketItemData(items, needItemSlot, player);
     }
 
@@ -68,6 +75,7 @@ public class SellItemGUI extends BaseGUI {
         instance.addItemToGUI(Objects.requireNonNullElse(marketItemData.getItem().getFirst(),new ItemStack(Material.BARRIER)), marketItemData);
         new NavGUI().open(player);
     }
+
     private void clearItems() {
         ItemUtil.setItems(inventory,new ItemStack(Material.AIR),itemSlots);
     }
@@ -153,18 +161,11 @@ public class SellItemGUI extends BaseGUI {
             );
         }
         for (int addSize : needItemSlots) {
-            addItemNameAndAction(
-                    addSize,
-                    "选择需要的物品",
-                    CHOOSENEEDITEM,
-                    (player
-                            , item
-                            , clickType
-                            , action
-                            , slot, event) -> {
-                        switchItemEffect(player, slot);
-                    }
-            );
+            addItemNameAndAction(addSize, "选择需要的物品", CHOOSINESS, (player
+                    , item
+                    , clickType
+                    , action
+                    , slot, event) -> switchItemEffect(player, slot));
         }
     }
 
