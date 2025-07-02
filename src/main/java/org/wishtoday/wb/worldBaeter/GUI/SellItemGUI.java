@@ -23,11 +23,11 @@ import java.util.*;
 public class SellItemGUI extends BaseGUI {
     private static final Material CHOOSENEEDITEM = Material.YELLOW_STAINED_GLASS_PANE;
     @NotNull
-    public static final NamespacedKey PLAYER_CLICK_SLOT = NamespacedKey.fromString("player_click_slot", WorldBaeter.getInstance());
+    public static final NamespacedKey PLAYER_CLICK_SLOT = Objects.requireNonNull(NamespacedKey.fromString("player_click_slot", WorldBaeter.getInstance()));
     @NotNull
-    public static final NamespacedKey IS_CLICKED = NamespacedKey.fromString("is_clicked", WorldBaeter.getInstance());
+    public static final NamespacedKey IS_CLICKED = Objects.requireNonNull(NamespacedKey.fromString("is_clicked", WorldBaeter.getInstance()));
     @NotNull
-    public static final NamespacedKey PLAYER_SELL_COUNT = NamespacedKey.fromString("player_sell_count", WorldBaeter.getInstance());
+    public static final NamespacedKey PLAYER_SELL_COUNT = Objects.requireNonNull(NamespacedKey.fromString("player_sell_count", WorldBaeter.getInstance()));
     public static final Component GUI_NAME = Component.text("Sell Item", NamedTextColor.GOLD);
     public static final Map<UUID, SellItemGUI> GUI_MAP = new HashMap<>();
     private static final int[] needItemSlots = {
@@ -180,6 +180,6 @@ public class SellItemGUI extends BaseGUI {
 
     @Override
     public void onClose(InventoryCloseEvent event) {
-
+        super.onClose(event);
     }
 }
