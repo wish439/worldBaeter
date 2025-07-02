@@ -54,6 +54,7 @@ public class MarketGUI extends BaseGUI {
     public void open(Player player, int index) {
         player.closeInventory();
         Inventory first = invs.get(index);
+        GUIManager.addToPlayerGUIMap(player, this);
         player.openInventory(first);
     }
 
