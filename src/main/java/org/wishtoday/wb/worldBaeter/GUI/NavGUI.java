@@ -164,7 +164,7 @@ public class NavGUI extends BaseGUI {
         addItemNameAndAction(
                 11,
                 marketColored(),
-                Material.IRON_INGOT,
+                Material.BEACON,
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true);    // 防止拖动按钮
                     player.sendMessage(Component.text("你点击了\"全服市场\""));
@@ -187,7 +187,7 @@ public class NavGUI extends BaseGUI {
         addItemNameAndAction(
                 13,
                 takeBackColored(),
-                Material.HOPPER,
+                Material.BARREL,
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true);                       // 避免拖拽
                     player.sendMessage(Component.text("你点击了\"取回交易物品\""));
@@ -228,7 +228,7 @@ public class NavGUI extends BaseGUI {
         addItemNameAndAction(
                 16,
                 receiveGoodsColored(),
-                Material.CHEST,
+                Material.ENDER_CHEST,
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true);
                     player.sendMessage(Component.text("你点击了领取交易货物"));
