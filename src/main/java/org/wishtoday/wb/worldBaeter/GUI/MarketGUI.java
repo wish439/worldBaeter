@@ -106,6 +106,17 @@ public class MarketGUI extends BaseGUI {
                 invs.addFirst(GuiUtils.cloneInventory(inventory));
                 initializeItems();
             }
+            /*addItemAndAction(entry.getKey(),entry.getValue(),
+                    (player, item, clickType
+                            , action, slot, event) -> {
+
+            });*/
+            UUID uuid = ItemUtil.addUUIDToItem(entry.getKey());
+            listeners.put(uuid,
+                    (player, item, clickType
+                            , action, slot, event) -> {
+
+            });
             last.addItem(entry.getKey());
         }
         Config.save(items);

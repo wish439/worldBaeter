@@ -97,6 +97,7 @@ public class ItemUtil {
     public static UUID addUUIDToItem(ItemStack stack, UUID uuid) {
         ItemMeta meta = stack.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();
+        if (container.has(ITEM_UUID_KEY, PersistentDataTypes.UUID)) return container.get(ITEM_UUID_KEY, PersistentDataTypes.UUID);
         container.set(ITEM_UUID_KEY, PersistentDataTypes.UUID , uuid);
         stack.setItemMeta(meta);
         return uuid;
@@ -108,8 +109,7 @@ public class ItemUtil {
     }
     public static UUID addUUIDToItem(ItemStack stack) {
         UUID uuid = UUID.randomUUID();
-        addUUIDToItem(stack, uuid);
-        return uuid;
+        return addUUIDToItem(stack, uuid);
     }
     @Nullable
     public static UUID getUUIDFromItem(ItemStack stack) {
