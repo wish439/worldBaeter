@@ -18,10 +18,8 @@ public class NavGUI extends BaseGUI {
     // 固定GUI标题
     private static final Component GUI_TITLE = TextGradient.createGradient(
             "导航菜单",
-            new TextColor[]{
-                    TextColor.color(0x4facfe),   // 天蓝
-                    TextColor.color(0x8e54e9)    // 紫罗兰
-            }
+            TextColor.color(0x4facfe),   // 天蓝
+            TextColor.color(0x8e54e9)    // 紫罗兰
     ).decoration(TextDecoration.BOLD, true);
 
     // 渐变颜色：绿色→金色
