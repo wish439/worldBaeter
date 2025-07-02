@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.wishtoday.wb.Impls.ClickAction;
 import org.wishtoday.wb.worldBaeter.Config.Config;
 import org.wishtoday.wb.worldBaeter.Util.*;
@@ -28,6 +29,8 @@ public class MarketGUI extends BaseGUI {
     private static MarketGUI instance;
     private List<Inventory> invs;
     private Map<ItemStack, MarketItemData> items;
+    /** 商品上架编号计数器 */
+    private int listingIndex;
 
     private MarketGUI() {
         super(title, GuiUtils.BIGCHESTSIZE);
@@ -36,6 +39,8 @@ public class MarketGUI extends BaseGUI {
         items = new LinkedHashMap<>();
         Map<ItemStack, MarketItemData> map = Config.loadItemStackMap();
         items.putAll(map);
+        // 初始化编号计数器（已存在的商品数量）
+        listingIndex = items.size();
         reloadInventory();
         /*ArrayList<ItemStack> list1 = new ArrayList<>();
         list1.add(new ItemStack(Material.DIRT));
@@ -70,6 +75,18 @@ public class MarketGUI extends BaseGUI {
     public void addItemToGUI(
             ItemStack item
             , MarketItemData itemData) {
+// 为商品生成自动编号
+        int id = ++listingIndex;
+        String idStr = String.format("%02d", id);
+// 在物品显示名前加上编号
+        if (item != null && item.getItemMeta() != null) {
+            org.bukkit.inventory.meta.ItemMeta meta = item.getItemMeta();
+            Component originalName = meta.hasDisplayName() ? meta.displayName() : Component.text(item.getType().translationKey());
+            meta.displayName(Component.text(idStr + " ").append(originalName));
+            item.setItemMeta(meta);
+        }
+
+
         addItemAndAction(item, itemData,
                 (player
                         , item1
