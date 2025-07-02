@@ -1493,4 +1493,4 @@ item_id:
   INFESTED_STONE: "虫蚀石头"
   YELLOW_GLAZED_TERRACOTTA: "黄色带釉陶瓦"
 game:
-  max_sell_count: 3
+  max_sell_count: 100

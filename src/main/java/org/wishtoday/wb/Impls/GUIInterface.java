@@ -22,4 +22,5 @@ public interface GUIInterface {
                    ClickType clickType, InventoryAction inventoryAction
                     , int slot, InventoryClickEvent event);
     void onClose(InventoryCloseEvent event);
+    void onClick(InventoryClickEvent event);
 }

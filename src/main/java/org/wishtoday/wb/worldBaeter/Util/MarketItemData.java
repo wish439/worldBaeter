@@ -67,6 +67,14 @@ public class MarketItemData implements ConfigurationSerializable {
         this.player = player;
     }
 
+    public int getTag() {
+        return tag;
+    }
+
+    public void setTag(int tag) {
+        this.tag = tag;
+    }
+
     @Override
     public @NotNull Map<String, Object> serialize() {
         HashMap<String, Object> map = new HashMap<>();

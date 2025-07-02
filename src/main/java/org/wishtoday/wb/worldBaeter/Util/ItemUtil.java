@@ -94,6 +94,7 @@ public class ItemUtil {
         setName(componentName, stack);
         return stack;
     }
+    @NotNull
     public static UUID addUUIDToItem(ItemStack stack, UUID uuid) {
         ItemMeta meta = stack.getItemMeta();
         PersistentDataContainer container = meta.getPersistentDataContainer();

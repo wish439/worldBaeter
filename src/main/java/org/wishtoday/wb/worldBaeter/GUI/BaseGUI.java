@@ -56,6 +56,7 @@ public abstract class BaseGUI implements GUIInterface {
         initializeItems();
         GUIManager.addToPlayerGUIMap(player, this);
         player.openInventory(inventory);
+        //open(player, 0);
     }
 
     @Override
@@ -191,5 +192,10 @@ public abstract class BaseGUI implements GUIInterface {
         //如果界面需要在关闭时执行逻辑,请写在此处
         GUIManager.removeGUI(event.getView().title());
         GUIManager.removeFromPlayerGUIMap((Player) event.getPlayer());
+    }
+
+    @Override
+    public void onClick(InventoryClickEvent event) {
+        //如果需要在点击背包时,有其他操作,请重写此方法
     }
 }

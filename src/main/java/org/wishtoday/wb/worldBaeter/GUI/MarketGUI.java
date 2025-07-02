@@ -29,7 +29,9 @@ public class MarketGUI extends BaseGUI {
     private static MarketGUI instance;
     private List<Inventory> invs;
     private Map<ItemStack, MarketItemData> items;
-    /** 商品上架编号计数器 */
+    /**
+     * 商品上架编号计数器
+     */
     private int listingIndex;
 
     private MarketGUI() {
@@ -41,7 +43,8 @@ public class MarketGUI extends BaseGUI {
         items.putAll(map);
         // 初始化编号计数器（已存在的商品数量）
         listingIndex = items.size();
-        reloadInventory();
+        sortAndReload();
+        //reloadInventory();
         /*ArrayList<ItemStack> list1 = new ArrayList<>();
         list1.add(new ItemStack(Material.DIRT));
         ArrayList<ItemStack> list2 = new ArrayList<>();
@@ -51,6 +54,31 @@ public class MarketGUI extends BaseGUI {
             addItemToGUI(new ItemStack(Material.BARRIER),marketItemData);
         }*/
     }
+
+    private void sortAndReload() {
+        ArrayList<Map.Entry<ItemStack, MarketItemData>> list = new ArrayList<>(items.entrySet());
+        list.sort(Comparator.comparingInt(o -> o.getValue().getTag()));
+        /*list.sort((o1, o2) ->
+            o2.getValue().getTag() - o1.getValue().getTag()
+        );*/
+        for (int i = 0; i < list.size(); i++) {
+            Map.Entry<ItemStack, MarketItemData> entry = list.get(i);
+            entry.getValue().setTag(i + 1);
+        }
+        LinkedHashMap<ItemStack, MarketItemData> map = new LinkedHashMap<>();
+        for (Map.Entry<ItemStack, MarketItemData> entry : list) {
+            ItemStack key = entry.getKey();
+            if (key.getItemMeta().hasDisplayName()) {
+                ItemMeta meta = key.getItemMeta();
+                meta.displayName(Component.text(entry.getValue().getTag()).append(key.getItemMeta().displayName()));
+                key.setItemMeta(meta);
+            }
+            map.put(key, entry.getValue());
+        }
+        items = map;
+        reloadInventory();
+    }
+
     public void setItems(Map<ItemStack, MarketItemData> map) {
         this.items = map;
     }
@@ -60,7 +88,13 @@ public class MarketGUI extends BaseGUI {
         player.closeInventory();
         Inventory first = invs.get(index);
         GUIManager.addToPlayerGUIMap(player, this);
+        sortAndReload();
         player.openInventory(first);
+    }
+
+    @Override
+    public void open(Player player) {
+        open(player, 0);
     }
 
     public void addItemAndAction(
@@ -96,7 +130,8 @@ public class MarketGUI extends BaseGUI {
                         , event) -> {
 
                 });
-        reloadInventory();
+        //reloadInventory();
+        sortAndReload();
     }
 
     public void addItemAndAuto() {
@@ -106,17 +141,17 @@ public class MarketGUI extends BaseGUI {
                 invs.addFirst(GuiUtils.cloneInventory(inventory));
                 initializeItems();
             }
-            /*addItemAndAction(entry.getKey(),entry.getValue(),
-                    (player, item, clickType
-                            , action, slot, event) -> {
-
-            });*/
             UUID uuid = ItemUtil.addUUIDToItem(entry.getKey());
             listeners.put(uuid,
-                    (player, item, clickType
-                            , action, slot, event) -> {
-
-            });
+                    (player,
+                     item,
+                     clickType,
+                     action,
+                     slot,
+                     event) -> {
+                        MarketItemData data = items.get(item);
+                        TradeGUI.getGUI(data).open(player);
+                    });
             last.addItem(entry.getKey());
         }
         Config.save(items);
@@ -149,7 +184,7 @@ public class MarketGUI extends BaseGUI {
                     Material.OAK_BUTTON,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage("你点击了上一页");
-                        open(player,0);
+                        open(player, 0);
                     }
             );
         }
@@ -171,7 +206,7 @@ public class MarketGUI extends BaseGUI {
                     Material.ARROW,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage("你点击了下一页");
-                        open(player,1);
+                        open(player, 1);
                     }
             );
         }

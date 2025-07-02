@@ -37,14 +37,14 @@ public class SellItemGUI extends BaseGUI {
             TextColor.color(0xffd54f)    // 金黄
     ).decoration(TextDecoration.BOLD, true);
     public static final Map<UUID, SellItemGUI> GUI_MAP = new HashMap<>();
-    private static final int[] needItemSlots = {
+    public static final int[] needItemSlots = {
             5, 6, 7, 8,
             14, 15, 16, 17,
             23, 24, 25, 26,
             32, 33, 34, 35,
             41, 42, 43, 44
     };
-    private static final int[] itemSlots = {
+    public static final int[] itemSlots = {
             0, 1, 2, 3,
             9, 10, 11, 12,
             18, 19, 20, 21,

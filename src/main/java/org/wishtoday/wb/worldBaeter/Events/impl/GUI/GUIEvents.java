@@ -8,6 +8,7 @@ import org.wishtoday.wb.worldBaeter.GUI.GUIManager;
 public class GUIEvents implements Listener {
     @EventHandler
     public void onClickItem(final InventoryClickEvent e) {
+        GUIManager.handlerOtherClicks(e);
         GUIManager.handlerActions(e);
     }
 }
