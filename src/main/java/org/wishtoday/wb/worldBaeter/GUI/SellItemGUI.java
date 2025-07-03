@@ -144,10 +144,16 @@ public class SellItemGUI extends BaseGUI {
                     "确认交易",
                     Material.GREEN_STAINED_GLASS_PANE,
                     (player, item, clickType, action, slot, event) -> {
-                        player.sendMessage(Component.text("你点击了\"确认交易\""));
+                        player.sendMessage(
+                                Component.text("✅ 你点击了", NamedTextColor.GREEN)
+                                        .append(Component.text("【确认交易】", NamedTextColor.YELLOW))
+                                        .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                        .decoration(TextDecoration.ITALIC, false)
+                        );
                         confirm(player);
                     }
             );
+
         }
         int startIndex1 = GuiUtils.BIGCHESTSIZE - 4;
         int endIndex1 = GuiUtils.BIGCHESTSIZE;
