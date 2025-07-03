@@ -1,6 +1,8 @@
 package org.wishtoday.wb.worldBaeter.Util;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TranslatableComponent;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Item;
@@ -140,5 +142,12 @@ public class ItemUtil {
         for (int i : slot) {
             inventory.setItem(i, item);
         }
+    }
+    public static void setChineseItemFromEnglish(ItemStack item) {
+        TranslatableComponent translatable = Component.translatable(item.getType().translationKey());
+        ItemMeta meta = item.getItemMeta();
+        translatable = translatable.decoration(TextDecoration.ITALIC, false);
+        meta.displayName(translatable);
+        item.setItemMeta(meta);
     }
 }

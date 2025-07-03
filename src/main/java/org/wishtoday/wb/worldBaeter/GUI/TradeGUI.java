@@ -1,6 +1,7 @@
 package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
+import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
 import org.wishtoday.wb.worldBaeter.WorldBaeter;
 
@@ -36,10 +38,12 @@ public class TradeGUI extends BaseGUI {
 
         for (int i = 0; i < item.size(); i++) {
             ItemStack stack = item.get(i);
+            ItemUtil.setChineseItemFromEnglish(stack);
             inventory.setItem(itemSlots[i], stack);
         }
         for (int i = 0; i < needItem.size(); i++) {
             ItemStack stack = needItem.get(i);
+            ItemUtil.setChineseItemFromEnglish(stack);
             inventory.setItem(needItemSlots[i], stack);
         }
     }
