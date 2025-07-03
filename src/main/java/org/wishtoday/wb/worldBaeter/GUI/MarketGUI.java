@@ -63,10 +63,8 @@ public class MarketGUI extends BaseGUI {
         list.sort((o1, o2) ->
                 o1.getValue().getTag() - o2.getValue().getTag()
         );
-        System.out.println("size" + list.size());
         for (int i = 0; i < list.size(); i++) {
             Map.Entry<ItemStack, MarketItemData> entry = list.get(i);
-            System.out.println(entry.getValue().getTag());
             entry.getValue().setTag(i + 1);
         }
         LinkedHashMap<ItemStack, MarketItemData> map = new LinkedHashMap<>();
@@ -161,7 +159,7 @@ public class MarketGUI extends BaseGUI {
             }
             item.setItemMeta(meta);
         }
-
+        itemData.setTag(id);
 
         addItemAndAction(item, itemData,
                 (player
