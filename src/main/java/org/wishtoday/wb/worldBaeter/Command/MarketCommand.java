@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.wishtoday.wb.worldBaeter.GUI.NavGUI;
 import org.wishtoday.wb.worldBaeter.GUI.TradeGUI;
+import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 
 public class MarketCommand {
     public static void registerCommand(Commands commands) {
@@ -46,6 +47,7 @@ public class MarketCommand {
         //effect start
         player.sendMessage("成功");
         //effect end
+        GuiUtils.removePlayerTag(player,TradeGUI.IS_NEED_CONFIRM);
         tradeGUI.open(player);
         TradeGUI.tradeGUIs.remove(player.getUniqueId());
         return 1;

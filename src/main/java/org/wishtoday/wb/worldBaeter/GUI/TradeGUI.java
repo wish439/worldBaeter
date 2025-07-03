@@ -3,6 +3,7 @@ package org.wishtoday.wb.worldBaeter.GUI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -47,6 +48,20 @@ public class TradeGUI extends BaseGUI {
             ItemUtil.setChineseItemFromEnglish(stack);
             inventory.setItem(needItemSlots[i], stack);
         }
+    }
+
+    @Override
+    public void open(Player player) {
+        Bukkit.getServer().getScheduler().runTask(
+                WorldBaeter.getInstance(), () -> {
+                    player.closeInventory();
+                    if (tradeGUIs.containsKey(player.getUniqueId())) {
+                        player.openInventory(tradeGUIs.get(player.getUniqueId()).inventory);
+                        return;
+                    }
+                    super.open(player);
+                }
+        );
     }
 
     @Override

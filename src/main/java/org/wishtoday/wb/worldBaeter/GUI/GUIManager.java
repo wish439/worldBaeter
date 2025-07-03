@@ -78,6 +78,7 @@ public class GUIManager {
         GUIInterface gui = getGUI(title);
         if (gui == null) return;
         if (!(humanEntity instanceof Player)) return;
+        if (!event.getView().title().contains(gui.getTitle(),Component.EQUALS)) return;
         gui.onClose(event);
     }
     public static void handlerOtherClicks(InventoryClickEvent event) {
@@ -85,6 +86,7 @@ public class GUIManager {
         if (!(humanEntity instanceof Player player)) return;
         GUIInterface gui = getGUI(player);
         if (gui == null) return;
+        if (!event.getView().title().contains(gui.getTitle(),Component.EQUALS)) return;
         gui.onClick(event);
     }
 }
