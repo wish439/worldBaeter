@@ -146,16 +146,17 @@ public class NavGUI extends BaseGUI {
     protected void initializeItems() {
         // 出售物品按钮（槽位10）
         addItemNameAndAction(
-                10
-                , colored()
-                , Material.LECTERN
-                , (player
-                        , item
-                        , clickType
-                        , action
-                        , __slot
-                        , event) -> {
-                    player.sendMessage(Component.text("你点击了\"物品交换\""));
+                10,
+                colored(),
+                Material.LECTERN,
+                (player, item, clickType, action, __slot, event) -> {
+                    player.sendMessage(
+                            Component.text("✅ 你点击了", NamedTextColor.GREEN)
+                                    .append(Component.text("【物品交换】", NamedTextColor.YELLOW))
+                                    .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                    .decoration(TextDecoration.ITALIC, false)
+                    );
+
                     SellItemGUI gui = new SellItemGUI();
                     gui.initializeItems();
                     gui.open(player);
@@ -167,7 +168,12 @@ public class NavGUI extends BaseGUI {
                 Material.BEACON,
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true);    // 防止拖动按钮
-                    player.sendMessage(Component.text("你点击了\"全服市场\""));
+                    player.sendMessage(
+                            Component.text("🛒 你点击了", NamedTextColor.GREEN)
+                                    .append(Component.text("【全服市场】", NamedTextColor.YELLOW))
+                                    .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                    .decoration(TextDecoration.ITALIC, false)
+                    );
                     MarketGUI.getInstance().open(player, 0);
                 }
         );
@@ -179,9 +185,15 @@ public class NavGUI extends BaseGUI {
                 Material.CHEST,
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true);       // 防止拖动按钮
-                    player.sendMessage(Component.text("你点击了\"卖家中心\""));
+                    player.sendMessage(
+                            Component.text("📦 你点击了", NamedTextColor.GREEN)
+                                    .append(Component.text("【卖家中心】", NamedTextColor.YELLOW))
+                                    .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                    .decoration(TextDecoration.ITALIC, false)
+                    );
                 }
         );
+
 
         // 取回物品按钮（槽位 13）
         addItemNameAndAction(
@@ -190,9 +202,15 @@ public class NavGUI extends BaseGUI {
                 Material.BARREL,
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true);                       // 避免拖拽
-                    player.sendMessage(Component.text("你点击了\"取回交易物品\""));
+                    player.sendMessage(
+                            Component.text("📥 你点击了", NamedTextColor.GREEN)
+                                    .append(Component.text("【取回交易物品】", NamedTextColor.YELLOW))
+                                    .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                    .decoration(TextDecoration.ITALIC, false)
+                    );
                 }
         );
+
 
         // 购买历史按钮（槽位 14）
         addItemNameAndAction(
@@ -231,9 +249,15 @@ public class NavGUI extends BaseGUI {
                 Material.ENDER_CHEST,
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true);
-                    player.sendMessage(Component.text("你点击了领取交易货物"));
+                    player.sendMessage(
+                            Component.text("📬 你点击了", NamedTextColor.GREEN)
+                                    .append(Component.text("【领取交易货物】", NamedTextColor.YELLOW))
+                                    .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                    .decoration(TextDecoration.ITALIC, false)
+                    );
                 }
         );
+
         // 跳页按钮（槽位 21）
         addItemNameAndAction(
                 21,
@@ -241,9 +265,22 @@ public class NavGUI extends BaseGUI {
                 Material.MAP,
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true);
-                    player.sendMessage(Component.text("你点击了跳转页按钮"));
+
+                    player.sendMessage(
+                            Component.text("📄 你点击了", NamedTextColor.GREEN)
+                                    .append(Component.text("【跳转页】", NamedTextColor.YELLOW))
+                                    .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                    .decoration(TextDecoration.ITALIC, false)
+                    );
+                    // 关闭当前 GUI
+                    player.closeInventory();
+                    player.sendMessage(
+                            Component.text("========= 请输入页码数字进行跳转 =========", NamedTextColor.GRAY)
+                                    .decoration(TextDecoration.ITALIC, false)
+                    );
                 }
         );
+
 
         // 退出按钮（槽位 22，点击后关闭 GUI）
         addItemNameAndAction(
@@ -253,7 +290,10 @@ public class NavGUI extends BaseGUI {
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true); // 避免拖拽
                     player.closeInventory();  // 关闭 GUI
-                    player.sendMessage(Component.text("你已退出界面"));
+                    player.sendMessage(
+                            Component.text("🚪 你已退出物品交换界面。", NamedTextColor.GREEN)
+                                    .decoration(TextDecoration.ITALIC, false)
+                    );
                 }
         );
 
@@ -264,9 +304,15 @@ public class NavGUI extends BaseGUI {
                 Material.PLAYER_HEAD,
                 (player, item, clickType, action, __slot, event) -> {
                     event.setCancelled(true); // 防止拖动按钮
-                    player.sendMessage(Component.text("你点击了\"玩家出售列表\""));
+                    player.sendMessage(
+                            Component.text("🧑‍💼 你点击了", NamedTextColor.GREEN)
+                                    .append(Component.text("【玩家出售列表】", NamedTextColor.YELLOW))
+                                    .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                    .decoration(TextDecoration.ITALIC, false)
+                    );
                 }
         );
+
     }
     @Override
     public Inventory getInventory() {
