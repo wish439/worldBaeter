@@ -29,7 +29,7 @@ public class MarketGUI extends BaseGUI {
     ).decorate(TextDecoration.BOLD);
 
     private static MarketGUI instance;
-    private List<Inventory> invs;
+    private final List<Inventory> invs;
     private Map<ItemStack, MarketItemData> items;
     /**
      * 商品上架编号计数器
@@ -72,7 +72,7 @@ public class MarketGUI extends BaseGUI {
             ItemStack key = entry.getKey();
             if (key.getItemMeta().hasDisplayName()) {
                 ItemMeta meta = key.getItemMeta();
-                meta.displayName(Component.text(entry.getValue().getTag()).append(key.getItemMeta().displayName()));
+                meta.displayName(Component.text(entry.getValue().getTag()).append(Objects.requireNonNull(key.getItemMeta().displayName())));
                 key.setItemMeta(meta);
             }
             map.put(key, entry.getValue());
@@ -113,12 +113,18 @@ public class MarketGUI extends BaseGUI {
             , MarketItemData itemData) {
 // 为商品生成自动编号
         int id = ++listingIndex;
-        String idStr = String.format("%02d", id);
-// 在物品显示名前加上编号
+        String idStr = String.format("# + %02d", id);
+// 修改物品显示名，在原始名称前添加黄色编号
         if (item != null && item.getItemMeta() != null) {
-            org.bukkit.inventory.meta.ItemMeta meta = item.getItemMeta();
-            Component originalName = meta.hasDisplayName() ? meta.displayName() : Component.text(item.getType().translationKey());
-            meta.displayName(Component.text(idStr + " ").append(originalName));
+            ItemMeta meta = item.getItemMeta();
+            Component originalName = meta.hasDisplayName()
+                    ? meta.displayName()
+                    : Component.text(item.getType().translationKey());
+
+            if (originalName != null) {
+                Component numberedName = Component.text(idStr + " ").color(NamedTextColor.YELLOW).append(originalName);
+                meta.displayName(numberedName);
+            }
             item.setItemMeta(meta);
         }
 
