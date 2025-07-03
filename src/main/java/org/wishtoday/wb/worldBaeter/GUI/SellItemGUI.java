@@ -1,6 +1,8 @@
 package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -186,6 +188,11 @@ public class SellItemGUI extends BaseGUI {
         GUI_MAP.put(player.getUniqueId(), this);
         player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);
         player.sendMessage(Component.text("请在输入框输入你想要的物品名称(中英文皆可)"));
+        player.sendMessage(Component.text("输入market cancel switchitem即可取消选择"));
+        player.sendMessage(Component.text("[点击此处快捷取消]", NamedTextColor.RED)
+                .hoverEvent(HoverEvent.showText(Component.text("点击此处快捷取消", NamedTextColor.RED)))
+                .clickEvent(ClickEvent.runCommand("/market cancel switchitem")));
+
     }
     private void itemBackToPlayer(Player player) {
         ItemUtil.givePlayerItems(player, inventory, itemSlots);

@@ -2,6 +2,9 @@ package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.event.HoverEventSource;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
@@ -132,6 +135,18 @@ public class TradeGUI extends BaseGUI {
                 Component.text("请输入 /market confirm 以确认交易。", NamedTextColor.GREEN)
                         .decoration(TextDecoration.ITALIC, false)
         );
+        player.sendMessage(
+                Component.text("请输入 /market cancel trade 以取消交易。", NamedTextColor.GREEN)
+                        .decoration(TextDecoration.ITALIC, false)
+        );
+        player.sendMessage(
+                Component.text("[可点击此处快捷确认]", NamedTextColor.GREEN)
+                        .hoverEvent(HoverEvent.showText(Component.text("点击此处快捷确认", NamedTextColor.GREEN)))
+                        .clickEvent(ClickEvent.runCommand("/market confirm"))
+        );
+        player.sendMessage(Component.text("[点击此处快捷取消]", NamedTextColor.RED)
+                .hoverEvent(HoverEvent.showText(Component.text("点击此处快捷取消", NamedTextColor.RED)))
+                .clickEvent(ClickEvent.runCommand("/market cancel trade")));
     }
 
 
