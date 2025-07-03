@@ -31,7 +31,7 @@ public final class WorldBaeter extends JavaPlugin {
         // ========== 插件启动逻辑 ========== //
         plugin = this;
         this.saveDefaultConfig();
-        ConfigUtils.initializeMap();// 确保数据文件夹存在
+        ConfigUtils.initializeMap();
         if (!getDataFolder().exists()) {
             getDataFolder().mkdirs();
         }

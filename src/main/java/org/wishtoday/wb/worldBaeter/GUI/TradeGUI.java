@@ -3,19 +3,27 @@ package org.wishtoday.wb.worldBaeter.GUI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 import org.wishtoday.wb.worldBaeter.Util.MarketItemData;
+import org.wishtoday.wb.worldBaeter.WorldBaeter;
 
-import java.util.List;
+import java.util.*;
 
 import static org.wishtoday.wb.worldBaeter.GUI.SellItemGUI.needItemSlots;
 import static org.wishtoday.wb.worldBaeter.GUI.SellItemGUI.itemSlots;
 
 public class TradeGUI extends BaseGUI {
     public static final Component TRADE_TITLE = Component.text("Trade", NamedTextColor.GOLD);
+    @NotNull
+    public static final NamespacedKey IS_NEED_CONFIRM = Objects.requireNonNull(NamespacedKey.fromString("is_need_confirm", WorldBaeter.getInstance()));
+    public static final Map<UUID, TradeGUI> tradeGUIs = new HashMap<>();
 
     private TradeGUI(MarketItemData market) {
         super(TRADE_TITLE, GuiUtils.BIGCHESTSIZE);
@@ -56,6 +64,7 @@ public class TradeGUI extends BaseGUI {
                     Material.GREEN_STAINED_GLASS_PANE,
                     (player, item1, clickType, action, slot, event) -> {
                         player.sendMessage(Component.text("你点击了\"确认交易\""));
+                        confirmBuy(player);
                     }
             );
         }
@@ -73,6 +82,13 @@ public class TradeGUI extends BaseGUI {
             );
         }
         return inventory;
+    }
+
+    private void confirmBuy(Player player) {
+        player.getPersistentDataContainer().set(IS_NEED_CONFIRM, PersistentDataType.BOOLEAN, true);
+        tradeGUIs.put(player.getUniqueId(), this);
+        player.closeInventory();
+        player.sendMessage(Component.text("请输入/market confirm以确认交易"));
     }
 
     @Override
