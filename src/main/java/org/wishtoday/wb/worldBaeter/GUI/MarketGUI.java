@@ -59,20 +59,45 @@ public class MarketGUI extends BaseGUI {
 
     private void sortAndReload() {
         ArrayList<Map.Entry<ItemStack, MarketItemData>> list = new ArrayList<>(items.entrySet());
-        list.sort(Comparator.comparingInt(o -> o.getValue().getTag()));
-        /*list.sort((o1, o2) ->
-            o2.getValue().getTag() - o1.getValue().getTag()
-        );*/
+        //list.sort(Comparator.comparingInt(o -> o.getValue().getTag()));
+        list.sort((o1, o2) ->
+                o1.getValue().getTag() - o2.getValue().getTag()
+        );
+        System.out.println("size" + list.size());
         for (int i = 0; i < list.size(); i++) {
             Map.Entry<ItemStack, MarketItemData> entry = list.get(i);
+            System.out.println(entry.getValue().getTag());
             entry.getValue().setTag(i + 1);
         }
         LinkedHashMap<ItemStack, MarketItemData> map = new LinkedHashMap<>();
         for (Map.Entry<ItemStack, MarketItemData> entry : list) {
             ItemStack key = entry.getKey();
-            if (key.getItemMeta().hasDisplayName()) {
+            /*if (key.getItemMeta().hasDisplayName()) {
                 ItemMeta meta = key.getItemMeta();
                 meta.displayName(Component.text(entry.getValue().getTag()).append(Objects.requireNonNull(key.getItemMeta().displayName())));
+                key.setItemMeta(meta);
+            }*/
+            MarketItemData value = entry.getValue();
+            int id = value.getTag();
+            String idStr = String.format("# %02d", id);
+            if (key != null && key.getItemMeta() != null) {
+                ItemMeta meta = key.getItemMeta();
+
+                // 获取原始显示名（优先用已有显示名，否则用本地化名称）
+                /*Component originalName = meta.hasDisplayName()
+                        ? meta.displayName()
+                        : Component.translatable(key.getType().translationKey())
+                        .decoration(TextDecoration.ITALIC, false);  // 取消默认斜体*/
+                Component originalName = Component.translatable(key.getType().translationKey())
+                        .decoration(TextDecoration.ITALIC, false);
+
+                // 编号前缀（黄色、非斜体）
+                Component numberedName = Component.text(idStr + " ")
+                        .color(NamedTextColor.YELLOW)
+                        .decoration(TextDecoration.ITALIC, false)  // 编号非斜体
+                        .append(originalName);
+
+                meta.displayName(numberedName);
                 key.setItemMeta(meta);
             }
             map.put(key, entry.getValue());

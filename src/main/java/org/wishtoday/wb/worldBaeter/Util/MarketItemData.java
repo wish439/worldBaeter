@@ -37,6 +37,12 @@ public class MarketItemData implements ConfigurationSerializable {
         this.player = player;
         tag = 0;
     }
+    public MarketItemData(List<ItemStack> item, List<ItemStack> needItem, PlayerData player, int tag) {
+        this.item = item;
+        this.needItem = needItem;
+        this.player = player;
+        this.tag = tag;
+    }
     public MarketItemData(List<ItemStack> item, List<ItemStack> needItem, Player player) {
         this.item = item;
         this.needItem = needItem;
@@ -89,7 +95,7 @@ public class MarketItemData implements ConfigurationSerializable {
         List<ItemStack> item = deserializeItemList((List<Map<String, Object>>) args.get("item"));
         List<ItemStack> needItem = deserializeItemList((List<Map<String, Object>>) args.get("needItem"));
         int tag = (Integer) args.get("tag");
-        return new MarketItemData(item, needItem,player);
+        return new MarketItemData(item, needItem,player,tag);
     }
     private List<Map<String, Object>> serializeItemList(List<ItemStack> items) {
         List<Map<String, Object>> result = new ArrayList<>();
