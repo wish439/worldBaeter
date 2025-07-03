@@ -113,16 +113,18 @@ public class MarketGUI extends BaseGUI {
             , MarketItemData itemData) {
 // 为商品生成自动编号
         int id = ++listingIndex;
-        String idStr = String.format("# + %02d", id);
+        String idStr = String.format("#%02d", id);  // 编号格式 "# + 01"
 // 修改物品显示名，在原始名称前添加黄色编号
         if (item != null && item.getItemMeta() != null) {
             ItemMeta meta = item.getItemMeta();
             Component originalName = meta.hasDisplayName()
                     ? meta.displayName()
-                    : Component.text(item.getType().translationKey());
+                    : Component.translatable(item.getType().translationKey());  // 自动本地化
 
             if (originalName != null) {
-                Component numberedName = Component.text(idStr + " ").color(NamedTextColor.YELLOW).append(originalName);
+                Component numberedName = Component.text(idStr + " ")
+                        .color(NamedTextColor.YELLOW)
+                        .append(originalName);
                 meta.displayName(numberedName);
             }
             item.setItemMeta(meta);
