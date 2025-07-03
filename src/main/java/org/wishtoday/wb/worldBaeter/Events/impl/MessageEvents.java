@@ -8,10 +8,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.wishtoday.wb.worldBaeter.GUI.SellItemGUI;
 import org.wishtoday.wb.worldBaeter.Util.ConfigUtils;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
+import org.wishtoday.wb.worldBaeter.Util.ItemUtil;
 
 import static org.wishtoday.wb.worldBaeter.GUI.SellItemGUI.*;
 
@@ -28,14 +30,15 @@ public class MessageEvents implements Listener {
         Integer i = player.getPersistentDataContainer().get(PLAYER_CLICK_SLOT, PersistentDataType.INTEGER);
         if (i == null) return;
         if (itemType != null) {
+            ItemStack stack = new ItemStack(itemType);
+            ItemUtil.setChineseItemFromEnglish(stack);
             gui.addItemNameAndActionAutoRefresh(
                     i
-                    ,itemType.name()
-                    ,itemType
-                    , (player1,item,clickType,action,slot,clickEvent) -> {
+                    , stack
+                    , (player1, item, clickType, action, slot, clickEvent) -> {
                         Inventory inventory = clickEvent.getClickedInventory();
                         if (inventory == null) return;
-                        if (clickType.equals(ClickType.LEFT))  inventory.setItem(slot,item.add(1));
+                        if (clickType.equals(ClickType.LEFT)) inventory.setItem(slot, item.add(1));
                         if (clickType.equals(ClickType.RIGHT)) {
                             if (item.getAmount() - 1 == 0) {
                                 gui.addItemNameAndActionAutoRefresh(
@@ -51,7 +54,7 @@ public class MessageEvents implements Listener {
                                         }
                                 );
                             } else {
-                                inventory.setItem(slot,item.add(-1));
+                                inventory.setItem(slot, item.add(-1));
                             }
                         }
                     }

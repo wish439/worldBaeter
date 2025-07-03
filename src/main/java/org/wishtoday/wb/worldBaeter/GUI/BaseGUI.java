@@ -136,6 +136,16 @@ public abstract class BaseGUI implements GUIInterface {
         listeners.put(uuid, action);
         populateItems();
     }
+    public void addItemNameAndActionAutoRefresh(
+            int slot,
+            ItemStack item
+            , ClickAction action) {
+        UUID uuid = UUID.randomUUID();
+        addItems.put(slot, item);
+        // 关联文本组件和点击动作（用于后续事件触发）
+        listeners.put(uuid, action);
+        populateItems();
+    }
 
     public void addItemNameAndActionAutoRefresh(
             String name
