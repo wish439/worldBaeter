@@ -312,7 +312,6 @@ public class NavGUI extends BaseGUI {
                     );
                 }
         );
-
     }
     @Override
     public Inventory getInventory() {

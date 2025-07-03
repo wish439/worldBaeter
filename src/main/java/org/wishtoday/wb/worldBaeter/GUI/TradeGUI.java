@@ -57,6 +57,7 @@ public class TradeGUI extends BaseGUI {
                 WorldBaeter.getInstance(), () -> {
                     player.closeInventory();
                     if (tradeGUIs.containsKey(player.getUniqueId())) {
+                        GUIManager.addToPlayerGUIMap(player, tradeGUIs.get(player.getUniqueId()));
                         player.openInventory(tradeGUIs.get(player.getUniqueId()).inventory);
                         return;
                     }
