@@ -156,11 +156,17 @@ public class SellItemGUI extends BaseGUI {
                     "回退界面",
                     Material.RED_STAINED_GLASS_PANE,
                     (player, item, clickType, action, slot, event) -> {
-                        player.sendMessage(Component.text("你点击了\"回退界面\""));
+                        player.sendMessage(
+                                Component.text("🔙 你点击了", NamedTextColor.GREEN)
+                                        .append(Component.text("【回退界面】", NamedTextColor.YELLOW))
+                                        .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                        .decoration(TextDecoration.ITALIC, false)
+                        );
                         itemBackToPlayer(player);
                         new NavGUI().open(player);
                     }
             );
+
         }
         for (int addSize : needItemSlots) {
             addItemNameAndAction(addSize, "选择需要的物品", CHOOSINESS, (player
@@ -171,15 +177,23 @@ public class SellItemGUI extends BaseGUI {
         }
     }
 
-    public void switchItemEffect(
-            Player player
-            , int slot) {
+    public void switchItemEffect(Player player, int slot) {
         player.getPersistentDataContainer().set(PLAYER_CLICK_SLOT, PersistentDataType.INTEGER, slot);
         player.getPersistentDataContainer().set(IS_CLICKED, PersistentDataType.BOOLEAN, true);
         GUI_MAP.put(player.getUniqueId(), this);
         player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);
-        player.sendMessage(Component.text("请在输入框输入你想要的物品名称(中英文皆可)"));
+
+        // 优化提示：使用分割线 + 说明
+        player.sendMessage(
+                Component.text("============ 请输入你想要的物品名称 ============", NamedTextColor.GRAY)
+                        .decoration(TextDecoration.ITALIC, false)
+        );
+        player.sendMessage(
+                Component.text("支持中文或物品英文，系统将根据名称进行匹配。", NamedTextColor.GREEN)
+                        .decoration(TextDecoration.ITALIC, false)
+        );
     }
+
     private void itemBackToPlayer(Player player) {
         List<ItemStack> items = ItemUtil.getItems(inventory, itemSlots);
         for (ItemStack item : items) {

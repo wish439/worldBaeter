@@ -3,6 +3,7 @@ package org.wishtoday.wb.worldBaeter.GUI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -83,10 +84,16 @@ public class TradeGUI extends BaseGUI {
                     "确认交易",
                     Material.GREEN_STAINED_GLASS_PANE,
                     (player, item1, clickType, action, slot, event) -> {
-                        player.sendMessage(Component.text("你点击了\"确认交易\""));
+                        player.sendMessage(
+                                Component.text("✅ 你点击了", NamedTextColor.GREEN)
+                                        .append(Component.text("【确认交易】", NamedTextColor.YELLOW))
+                                        .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                        .decoration(TextDecoration.ITALIC, false)
+                        );
                         confirmBuy(player);
                     }
             );
+
         }
         int startIndex1 = GuiUtils.BIGCHESTSIZE - 4;
         int endIndex1 = GuiUtils.BIGCHESTSIZE;
@@ -96,10 +103,16 @@ public class TradeGUI extends BaseGUI {
                     "回退界面",
                     Material.RED_STAINED_GLASS_PANE,
                     (player, item1, clickType, action, slot, event) -> {
-                        player.sendMessage(Component.text("你点击了\"回退界面\""));
+                        player.sendMessage(
+                                Component.text("🔙 你点击了", NamedTextColor.GREEN)
+                                        .append(Component.text("【回退界面】", NamedTextColor.YELLOW))
+                                        .append(Component.text("按钮！", NamedTextColor.GREEN))
+                                        .decoration(TextDecoration.ITALIC, false)
+                        );
                         MarketGUI.getInstance().open(player);
                     }
             );
+
         }
         return inventory;
     }
@@ -108,8 +121,18 @@ public class TradeGUI extends BaseGUI {
         player.getPersistentDataContainer().set(IS_NEED_CONFIRM, PersistentDataType.BOOLEAN, true);
         tradeGUIs.put(player.getUniqueId(), this);
         player.closeInventory();
-        player.sendMessage(Component.text("请输入/market confirm以确认交易"));
+
+        // 优化后的分隔提示
+        player.sendMessage(
+                Component.text("======= 交易未完成 =======", NamedTextColor.GRAY)
+                        .decoration(TextDecoration.ITALIC, false)
+        );
+        player.sendMessage(
+                Component.text("请输入 /market confirm 以确认交易。", NamedTextColor.GREEN)
+                        .decoration(TextDecoration.ITALIC, false)
+        );
     }
+
 
     @Override
     protected void initializeItems() {
