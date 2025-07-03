@@ -2,6 +2,7 @@ package org.wishtoday.wb.worldBaeter.GUI;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,10 +22,11 @@ public class MarketGUI extends BaseGUI {
     // 使用渐变工具类创建标题
     public static Component title = TextGradient.createGradient(
             "交易市场",
-            NamedTextColor.WHITE,
-            NamedTextColor.DARK_GRAY,
-            NamedTextColor.GOLD
-    );
+            NamedTextColor.GOLD,
+            NamedTextColor.YELLOW,
+            NamedTextColor.RED,
+            NamedTextColor.DARK_PURPLE
+    ).decorate(TextDecoration.BOLD);
 
     private static MarketGUI instance;
     private List<Inventory> invs;
