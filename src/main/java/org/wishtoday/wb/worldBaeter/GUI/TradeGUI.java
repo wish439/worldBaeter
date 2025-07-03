@@ -35,6 +35,7 @@ public class TradeGUI extends BaseGUI {
     private void parseMarketItemData(MarketItemData market) {
         List<ItemStack> item = market.getItem();
         List<ItemStack> needItem = market.getNeedItem();
+        if (needItem.isEmpty()) System.out.println("Empty needItem");
 
         for (int i = 0; i < item.size(); i++) {
             ItemStack stack = item.get(i);

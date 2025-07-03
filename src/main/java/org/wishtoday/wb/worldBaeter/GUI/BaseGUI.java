@@ -140,7 +140,7 @@ public abstract class BaseGUI implements GUIInterface {
             int slot,
             ItemStack item
             , ClickAction action) {
-        UUID uuid = UUID.randomUUID();
+        UUID uuid = ItemUtil.addUUIDToItem(item);
         addItems.put(slot, item);
         // 关联文本组件和点击动作（用于后续事件触发）
         listeners.put(uuid, action);

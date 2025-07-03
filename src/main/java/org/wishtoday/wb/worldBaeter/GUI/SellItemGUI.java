@@ -66,13 +66,14 @@ public class SellItemGUI extends BaseGUI {
 
     private void confirm(Player player) {
         if (getSellCount(player) >= Config.max_sell_count) {
-            player.closeInventory(InventoryCloseEvent.Reason.PLAYER);
+            player.closeInventory();
             player.sendMessage("您的售卖次数已达上限");
             return;
         }
         MarketItemData marketItemData = parseFromSlot(player);
         MarketGUI instance = MarketGUI.getInstance();
         instance.addItemToGUI(Objects.requireNonNullElse(marketItemData.getItem().getFirst(),new ItemStack(Material.BARRIER)), marketItemData);
+        player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);
         new NavGUI().open(player);
     }
 
@@ -156,6 +157,7 @@ public class SellItemGUI extends BaseGUI {
                     Material.RED_STAINED_GLASS_PANE,
                     (player, item, clickType, action, slot, event) -> {
                         player.sendMessage(Component.text("你点击了\"回退界面\""));
+                        itemBackToPlayer(player);
                         new NavGUI().open(player);
                     }
             );
@@ -175,12 +177,21 @@ public class SellItemGUI extends BaseGUI {
         player.getPersistentDataContainer().set(PLAYER_CLICK_SLOT, PersistentDataType.INTEGER, slot);
         player.getPersistentDataContainer().set(IS_CLICKED, PersistentDataType.BOOLEAN, true);
         GUI_MAP.put(player.getUniqueId(), this);
-        player.closeInventory();
+        player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);
         player.sendMessage(Component.text("请在输入框输入你想要的物品名称(中英文皆可)"));
+    }
+    private void itemBackToPlayer(Player player) {
+        List<ItemStack> items = ItemUtil.getItems(inventory, itemSlots);
+        for (ItemStack item : items) {
+            player.getInventory().addItem(item);
+        }
+        clearItems();
     }
 
     @Override
     public void onClose(InventoryCloseEvent event) {
         super.onClose(event);
+        if (event.getReason() == InventoryCloseEvent.Reason.PLUGIN) return;
+        itemBackToPlayer((Player) event.getPlayer());
     }
 }
