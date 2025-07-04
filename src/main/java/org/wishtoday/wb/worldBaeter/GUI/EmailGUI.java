@@ -6,16 +6,15 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.wishtoday.wb.worldBaeter.Config.Config;
 import org.wishtoday.wb.worldBaeter.Util.GuiUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class EmailGUI extends BaseGUI {
     public static final Component EMAIL_TITLE = Component.text("email", NamedTextColor.AQUA);
     private static Map<UUID, EmailGUI> emails = new HashMap<>();
+    public static Map<UUID, List<ItemStack>> emailItems = new HashMap<>();
 
     private EmailGUI() {
         super(EMAIL_TITLE, GuiUtils.BIGCHESTSIZE);
@@ -45,6 +44,15 @@ public class EmailGUI extends BaseGUI {
         }
     }
 
+    @Override
+    public void open(Player player) {
+        player.closeInventory();
+        initializeItems();
+        addItemsToEmail(emailItems.get(player.getUniqueId()), player);
+        GUIManager.addToPlayerGUIMap(player, this);
+        player.openInventory(inventory);
+    }
+
     public static EmailGUI getGUIFromPlayer(Player player) {
         return emails.get(player.getUniqueId());
     }
@@ -55,14 +63,17 @@ public class EmailGUI extends BaseGUI {
         emails.put(player.getUniqueId(), gui);
     }
 
-    public void addItemToEmail(ItemStack stack) {
+    public void addItemToEmail(ItemStack stack, Player player) {
         int i = GuiUtils.getFilterItemSlotCount(inventory);
         inventory.setItem(i, stack);
+        emailItems.get(player.getUniqueId()).add(stack);
+        Config.save();
     }
 
-    public void addItemsToEmail(List<ItemStack> stack) {
+    public void addItemsToEmail(List<ItemStack> stack, Player player) {
+        if (stack == null) return;
         for (ItemStack itemStack : stack) {
-            addItemToEmail(itemStack);
+            addItemToEmail(itemStack,player);
         }
     }
 }
