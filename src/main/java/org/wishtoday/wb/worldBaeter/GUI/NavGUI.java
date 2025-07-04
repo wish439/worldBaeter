@@ -255,6 +255,7 @@ public class NavGUI extends BaseGUI {
                                     .append(Component.text("按钮！", NamedTextColor.GREEN))
                                     .decoration(TextDecoration.ITALIC, false)
                     );
+                    EmailGUI.getGUIFromPlayer(player).open(player);
                 }
         );
 

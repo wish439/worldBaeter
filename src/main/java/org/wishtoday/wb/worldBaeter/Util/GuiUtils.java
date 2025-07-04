@@ -110,5 +110,39 @@ public class GuiUtils {
         }
         return itemStacks;
     }
+    public static int[] getAllSlot(Inventory inventory) {
+        int size = inventory.getSize();
+        int[] slots = new int[size];
+        for (int i = 0; i < size; i++) {
+            slots[i] = i;
+        }
+        return slots;
+    }
+    public static int[] getAllSlot(int num) {
+        int[] slots = new int[num];
+        for (int i = 0; i < num; i++) {
+            slots[i] = i;
+        }
+        return slots;
+    }
+    /**
+    * 获取背包中除去某种物品栏位的数量
+    * @param inventory 需要筛选的背包
+    * @param material 需要筛选掉的ItemType
+     * @return 筛选掉material的栏位数
+    * */
+    public static int getFilterItemSlotCount(Inventory inventory
+            , Material material) {
+        int size = inventory.getSize();
+        for (ItemStack stack : inventory) {
+            if (stack.getType() == material) {
+                size--;
+            }
+        }
+        return size;
+    }
+    public static int getFilterItemSlotCount(Inventory inventory) {
+        return getFilterItemSlotCount(inventory, DEFAULTERS);
+    }
 
 }
