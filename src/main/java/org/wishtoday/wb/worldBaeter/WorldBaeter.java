@@ -35,12 +35,13 @@ public final class WorldBaeter extends JavaPlugin {
         if (!getDataFolder().exists()) {
             getDataFolder().mkdirs();
         }
-        Config.loadEmail();
         // 1. 注册所有事件监听器
         registerEvent(this.getServer().getPluginManager(),this);
         // 3. 注册插件命令
         registerCommands();
         registerConfigClass();
+        //Config.loadEmail();
+        Config.loadMarket();
     }
     private void registerConfigClass() {
         ConfigurationSerialization.registerClass(MarketItemData.class);

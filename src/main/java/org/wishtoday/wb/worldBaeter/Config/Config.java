@@ -39,9 +39,9 @@ public class Config {
         }
     }
 
-    public static Map<ItemStack, MarketItemData> loadMarket() {
+    public static void loadMarket() {
         Map<ItemStack, MarketItemData> map = new HashMap<>();
-        if (!MARKET_FILE.exists()) return map;
+        if (!MARKET_FILE.exists()) return;
         YamlConfiguration config = YamlConfiguration.loadConfiguration(MARKET_FILE);
         for (String key : config.getKeys(false)) {
             ItemStack item = itemStackFromBase64(key);
@@ -50,7 +50,14 @@ public class Config {
                 map.put(item, data);
             }
         }
-        return map;
+        MarketGUI.getInstance().setItems(map);
+        if (!EMAIL_FILE.exists()) return;
+        YamlConfiguration loaded = YamlConfiguration.loadConfiguration(EMAIL_FILE);
+        for (String s : loaded.getKeys(false)) {
+            UUID uuid = UUID.fromString(s);
+            List<ItemStack> list = (List<ItemStack>) loaded.getList(s);
+            EmailGUI.emailItems.put(uuid, list);
+        }
     }
     public static void saveEmail() {
         YamlConfiguration emailConfig = new YamlConfiguration();
@@ -65,13 +72,7 @@ public class Config {
         }
     }
     public static void loadEmail() {
-        if (!EMAIL_FILE.exists()) return;
-        YamlConfiguration loaded = YamlConfiguration.loadConfiguration(EMAIL_FILE);
-        for (String s : loaded.getKeys(false)) {
-            UUID uuid = UUID.fromString(s);
-            List<ItemStack> list = (List<ItemStack>) loaded.getList(s);
-            EmailGUI.emailItems.put(uuid, list);
-        }
+
     }
 
 
