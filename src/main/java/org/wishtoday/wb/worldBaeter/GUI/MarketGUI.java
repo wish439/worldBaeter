@@ -41,7 +41,8 @@ public class MarketGUI extends BaseGUI {
         invs = new ArrayList<>();
         invs.add(inventory);
         items = new LinkedHashMap<>();
-        Config.load();
+        Map<ItemStack, MarketItemData> map = Config.loadMarket();
+        items.putAll(map);
         // 初始化编号计数器（已存在的商品数量）
         listingIndex = items.size();
         sortAndReload();
@@ -196,7 +197,7 @@ public class MarketGUI extends BaseGUI {
                     });
             last.addItem(entry.getKey());
         }
-        Config.save();
+        Config.saveMarket(items);
         //Config.setConfig("market_items", items);
         //System.out.println("addItemAndAuto" + invs.size());
     }

@@ -35,6 +35,7 @@ public final class WorldBaeter extends JavaPlugin {
         if (!getDataFolder().exists()) {
             getDataFolder().mkdirs();
         }
+        Config.loadEmail();
         // 1. 注册所有事件监听器
         registerEvent(this.getServer().getPluginManager(),this);
         // 3. 注册插件命令
@@ -65,7 +66,7 @@ public final class WorldBaeter extends JavaPlugin {
     public void onDisable() {
         // ========== 插件关闭逻辑 ========== //
         // 此处可添加数据保存、资源释放等操作
-        //Config.save();
+        //Config.saveMarket();
     }
     /**
      * 获取插件单例实例

@@ -67,7 +67,7 @@ public class EmailGUI extends BaseGUI {
         int i = GuiUtils.getFilterItemSlotCount(inventory);
         inventory.setItem(i, stack);
         emailItems.get(player.getUniqueId()).add(stack);
-        Config.save();
+        Config.saveEmail();
     }
 
     public void addItemsToEmail(List<ItemStack> stack, Player player) {

@@ -23,32 +23,25 @@ public class Config {
     private static FileConfiguration defaultConfig = WorldBaeter.getInstance().getConfig();
     public static Integer max_sell_count = defaultConfig.getInt(ConfigPath.MAX_SELL_COUNT.s);
 
-    public static void save() {
+    public static void saveMarket(Map<ItemStack, MarketItemData> map) {
         YamlConfiguration marketConfig = new YamlConfiguration();
-        Map<ItemStack, MarketItemData> map = MarketGUI.getInstance().getItems();
         for (Map.Entry<ItemStack, MarketItemData> entry : map.entrySet()) {
             String key = itemStackToBase64(entry.getKey());
             if (key != null) {
                 marketConfig.set(key, entry.getValue()); // 要求 MarketItemData 实现 ConfigurationSerializable
             }
         }
-        YamlConfiguration emailConfig = new YamlConfiguration();
-        for (Map.Entry<UUID, List<ItemStack>> entry : EmailGUI.emailItems.entrySet()) {
-            UUID key = entry.getKey();
-            emailConfig.set(key.toString(), entry.getValue());
-        }
+
         try {
             marketConfig.save(MARKET_FILE);
-            emailConfig.save(EMAIL_FILE);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void load() {
+    public static Map<ItemStack, MarketItemData> loadMarket() {
         Map<ItemStack, MarketItemData> map = new HashMap<>();
-        if (!MARKET_FILE.exists()) return;
-
+        if (!MARKET_FILE.exists()) return map;
         YamlConfiguration config = YamlConfiguration.loadConfiguration(MARKET_FILE);
         for (String key : config.getKeys(false)) {
             ItemStack item = itemStackFromBase64(key);
@@ -57,12 +50,26 @@ public class Config {
                 map.put(item, data);
             }
         }
+        return map;
+    }
+    public static void saveEmail() {
+        YamlConfiguration emailConfig = new YamlConfiguration();
+        for (Map.Entry<UUID, List<ItemStack>> entry : EmailGUI.emailItems.entrySet()) {
+            UUID key = entry.getKey();
+            emailConfig.set(key.toString(), entry.getValue());
+        }
+        try {
+            emailConfig.save(EMAIL_FILE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void loadEmail() {
         if (!EMAIL_FILE.exists()) return;
-        MarketGUI.getInstance().setItems(map);
         YamlConfiguration loaded = YamlConfiguration.loadConfiguration(EMAIL_FILE);
         for (String s : loaded.getKeys(false)) {
             UUID uuid = UUID.fromString(s);
-            List<ItemStack> list = (List<ItemStack>) config.getList(s);
+            List<ItemStack> list = (List<ItemStack>) loaded.getList(s);
             EmailGUI.emailItems.put(uuid, list);
         }
     }
